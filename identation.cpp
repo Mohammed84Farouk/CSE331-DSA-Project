@@ -15,7 +15,8 @@ int main()
     while (getline(in,line))
     {
         string tmp;
-
+        bool insidetag = false;
+        bool atribute = false;
         for (int i = 0, j = 0, k = 0; i < line.length(); i++)
         {
             
@@ -23,7 +24,14 @@ int main()
             }
             else{
                 j++;
-
+                if(line[i] == '>'){
+                    insidetag = false;
+                    atribute = false;
+                }
+                if(insidetag && line[i] == ' '){
+                    atribute = true;
+                }
+                if(atribute) continue;
                 tmp += line[i];
             }
 
