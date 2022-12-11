@@ -11,7 +11,6 @@ int main()
     ifstream in("test.xml");
     stack<string> stack;
 
-    bool begin_tag = false;
     while (getline(in,line))
     {
         string tmp;
