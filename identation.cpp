@@ -19,7 +19,7 @@ int main()
         bool atribute = false;
         bool tagPushed = false;
         bool closingtag = false;
-        for (int i = 0, j = 0, k = 0 , z = 0; i < line.length(); i++)
+        for (int i = 0, j = 0, z = 0; i < line.length(); i++)
         {
             
             if (line[i] == ' ' && openTag.size() == 0){
@@ -47,18 +47,17 @@ int main()
             if(i < 3) continue;
 
             if(openTag[j-1] == '<'){
-                k = j-1;
                 insidetag = true;
             }
 
-            if (openTag[k] == '<' && openTag[k+1] != '/' && openTag[j-1] == '>' && !tagPushed){
-                cout << openTag << endl;
-                stack.push(openTag);
+            if (openTag[0] == '<' && openTag[1] != '/' && openTag[j-1] == '>' && !tagPushed){
+                cout << openTag.substr(1,j-2) << endl;
+                stack.push(openTag.substr(1,j-2));
                 tagPushed = true;
             }
             if (closeTag[0] == '<' && closeTag[1] == '/' && closeTag[z-1] == '>'){
-                cout << closeTag << endl;
-                if(closeTag != stack.top()) cout << "ERROR "<< openTag<< "Has No Closing Tag " << endl;
+                cout << closeTag.substr(2, z-3) << endl;
+                if(closeTag.substr(2, z-3) != stack.top()) cout << "ERROR "<< stack.top() << "Has No Closing Tag " << endl;
                 else stack.pop();
             }
         }
