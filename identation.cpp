@@ -34,7 +34,12 @@ int main()
                 if(atribute) continue;
                 tmp += line[i];
             }
+            if(i < 3) continue;
 
+            if(tmp[j-1] == '<') {
+                k = j-1;
+                insidetag = true;
+            }
 
             if (tmp[k] == '<' && tmp[k+1] != '/' && tmp[j-1] == '>'){
                 cout << tmp << endl;
