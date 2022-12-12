@@ -17,6 +17,7 @@ int main()
         string openTag;
         string closeTag;
         string text;
+        string attribute;
         bool insidetag = false;
         bool atribute = false;
         bool tagPushed = true;
@@ -40,9 +41,9 @@ int main()
                     atribute = true;
                 }
 
-                if(atribute) continue;
+                if(atribute) attribute+= line[i];
                 
-                if(closingtag) {
+                else if(closingtag) {
                     closeTag += line[i];
                     z++;
                 }
@@ -56,28 +57,30 @@ int main()
 
 
             if (openTag[0] == '<' && openTag[1] != '/' && openTag[j-1] == '>' && !tagPushed){
-                cout<<openTag<<endl;
-                stack.push(openTag.substr(1,j-2));
+                if(openTag[1] != '?') stack.push(openTag.substr(1,j-2));
                 tagPushed = true;
-                out<<endl;
-                for (int w = 0; i < depth * 4; w++)
+                if(depth < 3) out<<endl;
+                for (int x = 0; x < depth * 4; x++)
                 {
-                    out.put(' ');
+                    out<< ' ';
                 }
-                
-                out << openTag ;
+                out << openTag.substr(0,j-1) << attribute << '>';
                 depth++;
             }
             if (closeTag[0] == '<' && closeTag[1] == '/' && closeTag[z-1] == '>'){
                 out << text ;
                 if(closeTag.substr(2, z-3) != stack.top()){
-                    cout << '<' << '/' << stack.top() << '>' <<endl;
                     out << '<' << '/' << stack.top() << '>' << endl;
+                    depth -= 2;
+                    for (int x = 0; x < depth * 4; x++)
+                    {
+                        out<< ' ';
+                    }
                     out << closeTag;
+                    continue;
                 } 
                 else{
-                    cout << closeTag << endl;
-                    out << closeTag;
+                    out << closeTag <<endl;
                     stack.pop();
                 }
                 depth--;
