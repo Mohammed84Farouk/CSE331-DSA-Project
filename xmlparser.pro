@@ -8,6 +8,6 @@ SOURCES       = main.cpp \
 RESOURCES     = xmlparser.qrc
 
 # install
-target.path = D:\Work\ASU_FOE\CSE331s Data Structures and Algorithms
+target.path = D:\Work\ASU_FOE\CSE331s Data Structures and Algorithms\CSE331-DSA-Project
 INSTALLS += target
 
