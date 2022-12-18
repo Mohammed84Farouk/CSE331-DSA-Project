@@ -5,13 +5,11 @@
 
 using namespace std;
 
-int main()
-{
-    string line;
-    ifstream in("test.xml");
+void consistent(){
     stack<string> stack;
+    ifstream in("sample.xml");
     ofstream out("output.xml");
-    int depth = 0;
+    string line;
     while (getline(in,line))
     {
         string openTag;
@@ -22,6 +20,7 @@ int main()
         bool atribute = false;
         bool tagPushed = true;
         bool closingtag = false;
+
         for (int i = 0, j = 0, z = 0; i < line.length(); i++)
         {
             if (line[i] == ' ' && openTag.size() == 0){
@@ -59,32 +58,81 @@ int main()
             if (openTag[0] == '<' && openTag[1] != '/' && openTag[j-1] == '>' && !tagPushed){
                 if(openTag[1] != '?') stack.push(openTag.substr(1,j-2));
                 tagPushed = true;
-                if(depth < 3) out<<endl;
-                for (int x = 0; x < depth * 4; x++)
-                {
-                    out<< ' ';
-                }
+                out<<endl;
                 out << openTag.substr(0,j-1) << attribute << '>';
-                depth++;
             }
             if (closeTag[0] == '<' && closeTag[1] == '/' && closeTag[z-1] == '>'){
                 out << text ;
+                
                 if(closeTag.substr(2, z-3) != stack.top()){
-                    out << '<' << '/' << stack.top() << '>' << endl;
-                    depth -= 2;
-                    for (int x = 0; x < depth * 4; x++)
-                    {
-                        out<< ' ';
-                    }
+                    out << '<' << '/' << stack.top() << '>';
+                    out <<endl;
+                    stack.pop();
                     out << closeTag;
+                    stack.pop();
                     continue;
                 } 
                 else{
-                    out << closeTag <<endl;
+                    if(text.size() < 1){
+                        out << endl;
+                    } 
+                    out << closeTag;
                     stack.pop();
                 }
-                depth--;
             }else if (i == line.length() -1) out << text;
         }
     }
+}
+void pretify(){
+    int depth = 0;
+    int depthfornextline = 0;
+    ifstream in("sample.xml");
+    ofstream out("output.xml");
+    string line;
+    while (getline(in,line))
+    {
+        string line2;
+        bool isTag = false;
+        for (int i = 0, j = 0, z = 0, q = 0; i < line.length(); i++)
+        {
+            if (line[i] == ' ' && line2.size() == 0){
+                continue;
+            }
+            else {
+                line2 += line[i];
+                j++;
+            }
+            if(line2[j-1] == '>'){
+                z = j-1;
+                isTag = true;
+            }
+            else if(line2[j-1] == '<') {
+                q = j-1;
+            }
+            if (i == line.length()-1)
+            {
+                /* code */
+            }
+            
+            if(line2[q] == '<' && line2[q+1] != '/' && line2[z] == '>' && isTag == true) {
+                depth++;
+                isTag = false;
+            }
+            else if(line2[q] == '<' && line2[q+1] == '/' && line2[z] == '>' && isTag == true) { 
+                depth--;
+                depthfornextline = depth;
+                isTag = false;
+            }
+        } 
+        for (int w = 0; w < depthfornextline; w++)
+        {
+            out<<'\t';
+        }
+        out<<line2<<endl;
+        depthfornextline = depth;
+    }
+}
+int main()
+{
+    pretify();
 }

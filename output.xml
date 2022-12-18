@@ -1,170 +1,81 @@
-<?xmlversion="1.0"?>
-<catalog>
-    <book>
-        <author>Gambardella, Matthew</author>
-
-        <title>XML Developer's Guide</title>
-
-        <genre>Computer</genre>
-
-        <price>44.95</price>
-
-        <publish_date>2000-10-01</publish_date>
-
-        <description>An in-depth look at creating applications withXML.</description>
-    </book>
-    <book id="bk102">
-        <author>Ralls, Kim</author>
-
-        <title>Midnight Rain</title>
-
-        <genre>Fantasy</genre>
-
-        <price>5.95</price>
-
-        <publish_date>2000-12-16</publish_date>
-
-        <description>A former architect battles corporate zombies, anevilsorceress,andherownchildhoodtobecomequeenoftheworld.</description>
-</book>
-
-    <book id="bk103">
-        <author>Corets, Eva</author>
-
-        <title>Maeve Ascendant</title>
-
-        <genre>Fantasy</genre>
-
-        <price>5.95</price>
-
-        <publish_date>2000-11-17</publish_date>
-
-        <description>After the collapse of a nanotechnology societyinEngland,theyoungsurvivorslaythefoundationforanewsociety.</description>
-</book>
-
-    <book id="bk104">
-        <author>Corets, Eva</author>
-
-        <title>Oberon's Legacy</title>
-
-        <genre>Fantasy</genre>
-
-        <price>5.95</price>
-
-        <publish_date>2001-03-10</publish_date>
-
-        <description>In post-apocalypse England, the mysterious agentknownonlyasOberonhelpstocreateanewlifefortheinhabitantsofLondon.SequeltoMaeveAscendant.</description>
-</book>
-
-    <book id="bk105">
-        <author>Corets, Eva</author>
-
-        <title>The Sundered Grail</title>
-
-        <genre>Fantasy</genre>
-
-        <price>5.95</price>
-
-        <publish_date>2001-09-10</publish_date>
-
-        <description>The two daughters of Maeve, half-sisters, battleoneanotherforcontrolofEngland.SequeltoOberon'sLegacy.</description>
-</book>
-
-    <book id="bk106">
-        <author>Randall, Cynthia</author>
-
-        <title>Lover Birds</title>
-
-        <genre>Romance</genre>
-
-        <price>4.95</price>
-
-        <publish_date>2000-09-02</publish_date>
-
-        <description>When Carla meets Paul at an ornithology conference,tempersflyasfeathersgetruffled.</description>
-</book>
-
-    <book id="bk107">
-        <author>Thurman, Paula</author>
-
-        <title>Splish Splash</title>
-
-        <genre>Romance</genre>
-
-        <price>4.95</price>
-
-        <publish_date>2000-11-02</publish_date>
-
-        <description>A deep sea diver finds true love twenty thousandleaguesbeneaththesea.</description>
-</book>
-
-    <book id="bk108">
-        <author>Knorr, Stefan</author>
-
-        <title>Creepy Crawlies</title>
-
-        <genre>Horror</genre>
-
-        <price>4.95</price>
-
-        <publish_date>2000-12-06</publish_date>
-
-        <description>An anthology of horror stories about roaches,centipedes,scorpionsandotherinsects.</description>
-</book>
-
-    <book id="bk109">
-        <author>Kress, Peter</author>
-
-        <title>Paradox Lost</title>
-
-        <genre>Science Fiction</genre>
-
-        <price>6.95</price>
-
-        <publish_date>2000-11-02</publish_date>
-
-        <description>After an inadvertant trip through a HeisenbergUncertaintyDevice,JamesSalwaydiscoverstheproblemsofbeingquantum.</description>
-</book>
-
-    <book id="bk110">
-        <author>O'Brien, Tim</author>
-
-        <title>Microsoft .NET: The Programming Bible</title>
-
-        <genre>Computer</genre>
-
-        <price>36.95</price>
-
-        <publish_date>2000-12-09</publish_date>
-
-        <description>Microsoft's .NET initiative is explored in detailinthisdeepprogrammer'sreference.</description>
-</book>
-
-    <book id="bk111">
-        <author>O'Brien, Tim</author>
-
-        <title>MSXML3: A Comprehensive Guide</title>
-
-        <genre>Computer</genre>
-
-        <price>36.95</price>
-
-        <publish_date>2000-12-01</publish_date>
-
-        <description>The Microsoft MSXML3 parser is covered in detail,withattentiontoXMLDOMinterfaces,XSLTprocessing,SAXandmore.</description>
-</book>
-
-    <book id="bk112">
-        <author>Galos, Mike</author>
-
-        <title>Visual Studio 7: A Comprehensive Guide</title>
-
-        <genre>Computer</genre>
-
-        <price>49.95</price>
-
-        <publish_date>2001-04-16</publish_date>
-
-        <description>Microsoft Visual Studio 7 is explored in depth,lookingathowVisualBasic,VisualC++,C#,andASP+areintegratedintoacomprehensivedevelopmentenvironment.</description>
-</book>
-</description>
-</catalog>
+<users>
+	<user>
+		<id>1</id>
+		<name>Ahmed Ali</name>
+		<posts>
+			<post>
+				<body>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+				</body>
+				<topics>
+					<topic>
+						economy
+					</topic>
+					<topic>
+						finance
+					</topic>
+				</topics>
+			</post>
+			<post>
+				<body>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+				</body>
+				<topics>
+					<topic>
+						solar_energy
+					</topic>
+				</topics>
+			</post>
+		</posts>
+		<followers>
+			<follower>
+				<id>2</id>
+			</follower>
+			<follower>
+				<id>3</id>
+			</follower>
+		</followers>
+	</user>
+	<user>
+		<id>2</id>
+		<name>Yasser Ahmed</name>
+		<posts>
+			<post>
+				<body>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+				</body>
+				<topics>
+					<topic>
+						education
+					</topic>
+				</topics>
+			</post>
+		</posts>
+		<followers>
+			<follower>
+				<id>1</id>
+			</follower>
+		</followers>
+	</user>
+	<user>
+		<id>3</id>
+		<name>Mohamed Sherif</name>
+		<posts>
+			<post>
+				<body>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+				</body>
+				<topics>
+					<topic>
+						sports
+					</topic>
+				</topics>
+			</post>
+		</posts>
+		<followers>
+			<follower>
+				<id>1</id>
+			</follower>
+		</followers>
+	</user>
+</users>
