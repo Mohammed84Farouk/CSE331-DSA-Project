@@ -45,6 +45,7 @@ private:
     bool saveFile(const QString &fileName);
     void setCurrentFile(const QString &fileName);
     void compressButtonClicked();
+    void decompressButtonClicked();
     void minifyingButtonClicked();
     QWidget *central;
     QString strippedName(const QString &fullFileName);

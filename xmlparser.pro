@@ -3,7 +3,8 @@ requires(qtConfig(filedialog))
 
 HEADERS       = mainwindow.h
 SOURCES       = main.cpp \
-                mainwindow.cpp
+                mainwindow.cpp \
+                compression_decompression/huffman.cpp
 
 RESOURCES     = xmlparser.qrc
 

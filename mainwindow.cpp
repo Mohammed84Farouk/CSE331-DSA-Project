@@ -1,6 +1,7 @@
 #include <QtWidgets>
 
 #include "mainwindow.h"
+#include "compression_decompression/huffman.cpp"
 
 MainWindow::MainWindow() : textEdit(new QPlainTextEdit) {
     createActions();
@@ -36,6 +37,7 @@ MainWindow::MainWindow() : textEdit(new QPlainTextEdit) {
     verticalGroupBox-> addWidget(toGRAPHButton);
 
     connect(compressButton, &QPushButton::released, this, &MainWindow::compressButtonClicked);
+    connect(decompressButton, &QPushButton::released, this, &MainWindow::decompressButtonClicked);
     connect(minifyingButton, &QPushButton::released, this, &MainWindow::minifyingButtonClicked);
 
     horizontalGroupBox->addLayout(verticalGroupBox);
@@ -67,10 +69,43 @@ MainWindow::MainWindow() : textEdit(new QPlainTextEdit) {
 }
 
 void MainWindow::compressButtonClicked() {
-//    QMessageBox::about(this, tr("About XML Parser"),
-//             tr("The <b>XML Parser</b> used to convert xml files to gui based understandable by anyone."));
-//    huffman huff = huffman("testin.xml", "testout.huf");
-//    huff.compress();
+    QString fileName = QFileDialog::getOpenFileName(this);
+//    qInfo() << fileName;
+    if (!fileName.isEmpty()) {
+        try {
+            Huffman huffman = Huffman(fileName.toStdString(), fileName.toStdString().append(".huff"));
+            huffman.compress();
+            QMessageBox::about(this, tr("Success"),
+                     tr("File compressed successfully."));
+        }
+        catch (exception) {
+            QMessageBox::about(this, tr("Error"),
+                     tr("Something went wrong."));
+        }
+    }
+}
+
+void MainWindow::decompressButtonClicked() {
+    QString fileName = QFileDialog::getOpenFileName(this);
+//    qInfo() << fileName;
+// minimum size is 8 it doesn't make sense if the filename length is less than or equal to 8 --> "D:/.huff"
+    if (fileName.length() <= 8 || fileName.toStdString().substr(fileName.length() - 5, fileName.length()) != ".huff") {
+        QMessageBox::about(this, tr("Error"),
+                 tr("Please choose a .huff file to decompress."));
+        return;
+    }
+    if (!fileName.isEmpty()) {
+        try {
+            Huffman huffman = Huffman(fileName.toStdString(), fileName.toStdString().substr(0, fileName.length() - 5));
+            huffman.decompress();
+            QMessageBox::about(this, tr("Success"),
+                     tr("File decompressed successfully."));
+        }
+        catch (exception) {
+            QMessageBox::about(this, tr("Error"),
+                     tr("Something went wrong."));
+        }
+    }
 }
 
 void MainWindow::minifyingButtonClicked() {
