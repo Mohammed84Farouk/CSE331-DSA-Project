@@ -59,6 +59,7 @@ private:
     QPushButton *minifyingButton;
     QPushButton *toJSONButton;
     QPushButton *toGRAPHButton;
+    QPlainTextEdit *outputConsole;
 };
 
 

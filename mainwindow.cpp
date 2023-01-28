@@ -9,43 +9,48 @@ MainWindow::MainWindow() : textEdit(new QPlainTextEdit) {
 
     central = new QWidget;
 
-    QVBoxLayout *mainlayout = new QVBoxLayout;
+    QVBoxLayout *mainLayout = new QVBoxLayout;
 
-    QHBoxLayout *hLayout = new QHBoxLayout;
+    QHBoxLayout *horizontalGroupBox = new QHBoxLayout;
 
-    hLayout-> addWidget(textEdit);
+    horizontalGroupBox-> addWidget(textEdit);
 
-    QVBoxLayout *controlButtons = new QVBoxLayout;
+    QVBoxLayout *verticalGroupBox = new QVBoxLayout;
 
-    checkButton = new QPushButton(tr("Button %1").arg(1));
-    fixButton = new QPushButton(tr("Button %1").arg(2));
-    compressButton = new QPushButton(tr("Button %1").arg(3));
-    decompressButton = new QPushButton(tr("Button %1").arg(4));
-    prettifyingButton = new QPushButton(tr("Button %1").arg(6));
-    minifyingButton = new QPushButton(tr("Button %1").arg(5));
-    toJSONButton = new QPushButton(tr("Button %1").arg(7));
-    toGRAPHButton = new QPushButton(tr("Button %1").arg(8));
+    checkButton = new QPushButton(tr("Validate"));
+    fixButton = new QPushButton(tr("Fix"));
+    compressButton = new QPushButton(tr("Compress"));
+    decompressButton = new QPushButton(tr("Decompress"));
+    prettifyingButton = new QPushButton(tr("Prettify"));
+    minifyingButton = new QPushButton(tr("Minify"));
+    toJSONButton = new QPushButton(tr("Json"));
+    toGRAPHButton = new QPushButton(tr("Graph"));
 
-    controlButtons-> addWidget(checkButton);
-    controlButtons-> addWidget(fixButton);
-    controlButtons-> addWidget(compressButton);
-    controlButtons-> addWidget(decompressButton);
-    controlButtons-> addWidget(prettifyingButton);
-    controlButtons-> addWidget(minifyingButton);
-    controlButtons-> addWidget(toJSONButton);
-    controlButtons-> addWidget(toGRAPHButton);
+    verticalGroupBox-> addWidget(checkButton);
+    verticalGroupBox-> addWidget(fixButton);
+    verticalGroupBox-> addWidget(compressButton);
+    verticalGroupBox-> addWidget(decompressButton);
+    verticalGroupBox-> addWidget(prettifyingButton);
+    verticalGroupBox-> addWidget(minifyingButton);
+    verticalGroupBox-> addWidget(toJSONButton);
+    verticalGroupBox-> addWidget(toGRAPHButton);
 
     connect(compressButton, &QPushButton::released, this, &MainWindow::compressButtonClicked);
     connect(minifyingButton, &QPushButton::released, this, &MainWindow::minifyingButtonClicked);
 
-    hLayout->addLayout(controlButtons);
+    horizontalGroupBox->addLayout(verticalGroupBox);
 
-    mainlayout->addLayout(hLayout);
-    mainlayout->addWidget(textEdit, 2.0);
+    mainLayout->addLayout(horizontalGroupBox);
+    mainLayout->addWidget(textEdit, 2.0);
+
+    outputConsole = new QPlainTextEdit();
+    outputConsole -> setReadOnly(true);
+
+    mainLayout -> addWidget(outputConsole);
 
     setMenuBar(menuBar);
 
-    central->setLayout(mainlayout);
+    central->setLayout(mainLayout);
 
     setCentralWidget(central);
 
