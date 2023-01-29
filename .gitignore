@@ -18,6 +18,7 @@ object_script.*.Debug
 /.qmake.stash
 /.idea/
 /cmake-build-debug/
+/CMakeLists.txt
 *.pro.user
 *.pro.user.*
 *.qbs.user
