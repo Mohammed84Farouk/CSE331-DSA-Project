@@ -80,6 +80,7 @@ void MainWindow::compressButtonClicked() {
         try {
             Huffman huffman = Huffman(fileName.toStdString(), fileName.toStdString().append(".huff"));
             huffman.compress();
+            statusBar()->showMessage(tr("File compressed to %1").arg(fileName.toStdString().append(".huff").data()));
             QMessageBox::about(this, tr("Success"),
                      tr("File compressed successfully."));
         }
@@ -92,7 +93,6 @@ void MainWindow::compressButtonClicked() {
 
 void MainWindow::decompressButtonClicked() {
     QString fileName = QFileDialog::getOpenFileName(this);
-//    qInfo() << fileName;
 // minimum size is 8 it doesn't make sense if the filename length is less than or equal to 8 --> "D:/.huff"
     if (fileName.length() <= 8 || fileName.toStdString().substr(fileName.length() - 5, fileName.length()) != ".huff") {
         QMessageBox::about(this, tr("Error"),
@@ -103,6 +103,7 @@ void MainWindow::decompressButtonClicked() {
         try {
             Huffman huffman = Huffman(fileName.toStdString(), fileName.toStdString().substr(0, fileName.length() - 5));
             huffman.decompress();
+            statusBar()->showMessage(tr("File decompressed to %1").arg(fileName.toStdString().substr(0, fileName.length() - 5).data()));
             QMessageBox::about(this, tr("Success"),
                      tr("File decompressed successfully."));
         }
@@ -117,7 +118,8 @@ void MainWindow::validateButtonClicked() {
     QString fileName = QFileDialog::getOpenFileName(this);
     if (!fileName.isEmpty()) {
         try {
-            consistent(fileName.toStdString(), fileName.toStdString().substr(0, fileName.length() - 4).append("(1).xml"));
+            consistent(fileName.toStdString(), fileName.toStdString().substr(0, fileName.length() - 4).append("_out.xml"));
+            statusBar()->showMessage(tr("File validated to %1").arg(fileName.toStdString().substr(0, fileName.length() - 4).append("_out.xml").data()));
             QMessageBox::about(this, tr("Success"),
                      tr("File validated successfully."));
         }
@@ -132,7 +134,8 @@ void MainWindow::prettifyingButtonClicked() {
     QString fileName = QFileDialog::getOpenFileName(this);
     if (!fileName.isEmpty()) {
         try {
-            pretify(fileName.toStdString(), fileName.toStdString().substr(0, fileName.length() - 4).append("(1).xml"));
+            pretify(fileName.toStdString(), fileName.toStdString().substr(0, fileName.length() - 4).append("_out.xml"));
+            statusBar()->showMessage(tr("File prettified to %1").arg(fileName.toStdString().substr(0, fileName.length() - 4).append("_out.xml").data()));
             QMessageBox::about(this, tr("Success"),
                      tr("File pretified successfully."));
         }
@@ -149,13 +152,20 @@ void MainWindow::minifyingButtonClicked() {
 }
 
 void MainWindow::jsonButtonClicked() {
-//    QString temp1 = minifying(textEdit->toPlainText().toStdString().data()).data();
-//    vector<string> temp2 = tags(temp1.toStdString());
-//    vector<string> temp3 = tagsData(temp1.toStdString());
-//    for (int i = 0 ; i < (int)temp3.size() ; i++) {
-//        outputConsole->appendPlainText(temp3.at(i).data());
-//    }
-    outputConsole->setPlainText(xmlToJSON(textEdit->toPlainText().toStdString()).data());
+    QPlainTextEdit *jsonViewer = new QPlainTextEdit();
+    jsonViewer -> setReadOnly(true);
+    try {
+        jsonViewer->setPlainText(xmlToJSON(textEdit->toPlainText().toStdString()).data());
+    }
+    catch (exception) {
+        QMessageBox::about(this, tr("Error"),
+                 tr("Something went wrong."));
+    }
+    QVBoxLayout *verticalBoxLayout = new QVBoxLayout();
+    verticalBoxLayout -> addWidget(jsonViewer);
+    QWidget *central = new QWidget();
+    central -> setLayout(verticalBoxLayout);
+    central -> show();
 }
 
 void MainWindow::closeEvent(QCloseEvent *event) {

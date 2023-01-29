@@ -1,5 +1,4 @@
 #include <bits/stdc++.h>
-#include <QString>
 
 using namespace std;
 //f1
