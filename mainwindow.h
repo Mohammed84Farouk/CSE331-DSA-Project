@@ -46,7 +46,10 @@ private:
     void setCurrentFile(const QString &fileName);
     void compressButtonClicked();
     void decompressButtonClicked();
+    void validateButtonClicked();
+    void prettifyingButtonClicked();
     void minifyingButtonClicked();
+    void jsonButtonClicked();
     QWidget *central;
     QString strippedName(const QString &fullFileName);
     QPlainTextEdit *textEdit;

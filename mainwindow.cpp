@@ -2,6 +2,8 @@
 
 #include "mainwindow.h"
 #include "compression_decompression/huffman.cpp"
+#include "xml_to_json/xmlToJson.cpp"
+#include "identation/identation.cpp"
 
 MainWindow::MainWindow() : textEdit(new QPlainTextEdit) {
     createActions();
@@ -38,7 +40,10 @@ MainWindow::MainWindow() : textEdit(new QPlainTextEdit) {
 
     connect(compressButton, &QPushButton::released, this, &MainWindow::compressButtonClicked);
     connect(decompressButton, &QPushButton::released, this, &MainWindow::decompressButtonClicked);
+    connect(checkButton, &QPushButton::released, this, &MainWindow::validateButtonClicked);
+    connect(prettifyingButton, &QPushButton::released, this, &MainWindow::prettifyingButtonClicked);
     connect(minifyingButton, &QPushButton::released, this, &MainWindow::minifyingButtonClicked);
+    connect(toJSONButton, &QPushButton::released, this, &MainWindow::jsonButtonClicked);
 
     horizontalGroupBox->addLayout(verticalGroupBox);
 
@@ -108,9 +113,51 @@ void MainWindow::decompressButtonClicked() {
     }
 }
 
+void MainWindow::validateButtonClicked() {
+    QString fileName = QFileDialog::getOpenFileName(this);
+//    qInfo() << fileName;
+    if (!fileName.isEmpty()) {
+        try {
+            consistent(fileName.toStdString(), "output.xml");
+            QMessageBox::about(this, tr("Success"),
+                     tr("File validated successfully."));
+        }
+        catch (exception) {
+            QMessageBox::about(this, tr("Error"),
+                     tr("Something went wrong."));
+        }
+    }
+}
+
+void MainWindow::prettifyingButtonClicked() {
+    QString fileName = QFileDialog::getOpenFileName(this);
+//    qInfo() << fileName;
+    if (!fileName.isEmpty()) {
+        try {
+            pretify(fileName.toStdString(), "output.xml");
+            QMessageBox::about(this, tr("Success"),
+                     tr("File pretified successfully."));
+        }
+        catch (exception) {
+            QMessageBox::about(this, tr("Error"),
+                     tr("Something went wrong."));
+        }
+    }
+}
+
 void MainWindow::minifyingButtonClicked() {
 //        QMessageBox::about(this, tr("About XML Parser"), );
 //        textEdit->setPlainText(minifying(textEdit->toPlainText().toStdString()).data());
+}
+
+void MainWindow::jsonButtonClicked() {
+//    QString temp1 = minifying(textEdit->toPlainText().toStdString().data()).data();
+//    vector<string> temp2 = tags(temp1.toStdString());
+//    vector<string> temp3 = tagsData(temp1.toStdString());
+//    for (int i = 0 ; i < (int)temp3.size() ; i++) {
+//        outputConsole->appendPlainText(temp3.at(i).data());
+//    }
+    outputConsole->setPlainText(xmlToJSON(textEdit->toPlainText().toStdString()).data());
 }
 
 void MainWindow::closeEvent(QCloseEvent *event) {
