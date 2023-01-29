@@ -115,10 +115,9 @@ void MainWindow::decompressButtonClicked() {
 
 void MainWindow::validateButtonClicked() {
     QString fileName = QFileDialog::getOpenFileName(this);
-//    qInfo() << fileName;
     if (!fileName.isEmpty()) {
         try {
-            consistent(fileName.toStdString(), "output.xml");
+            consistent(fileName.toStdString(), fileName.toStdString().substr(0, fileName.length() - 4).append("(1).xml"));
             QMessageBox::about(this, tr("Success"),
                      tr("File validated successfully."));
         }
@@ -131,10 +130,9 @@ void MainWindow::validateButtonClicked() {
 
 void MainWindow::prettifyingButtonClicked() {
     QString fileName = QFileDialog::getOpenFileName(this);
-//    qInfo() << fileName;
     if (!fileName.isEmpty()) {
         try {
-            pretify(fileName.toStdString(), "output.xml");
+            pretify(fileName.toStdString(), fileName.toStdString().substr(0, fileName.length() - 4).append("(1).xml"));
             QMessageBox::about(this, tr("Success"),
                      tr("File pretified successfully."));
         }
