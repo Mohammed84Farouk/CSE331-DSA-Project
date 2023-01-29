@@ -10,15 +10,24 @@ struct user{
     vector<int>followers;
     user(int _id, string _name){id=_id, name=_name;}
 };
-
+string getMostInfluencer(vector<vector<int>>&adj, map<int, string>&antiID){
+    int mx=0, influencer=-1;
+    for(int i=1;i<=adj.size();i++)
+        if(adj[i].size()>mx)
+            mx=adj[i].size(), influencer=i;
+    return antiID[influencer];
+}
 void SS(){
     int n;
     cin>>n;
     vector<user>v;
+    vector<vector<int>>adj(n+1);
+    map<int, string>antiID;
     for(int i=0;i<n;i++){
         int id;
         string s;
         cin>>id>>s;
+        antiID[id]=s;
         user u(id, s);
         int p;
         cin>>p;
@@ -34,11 +43,11 @@ void SS(){
             int follower;
             cin>>follower;
             u.followers.push_back(follower);
+            adj[id].push_back(f);                   // f follows id
         }
         v.push_back(u);
     }
-    cout<<"size of vector of users is "<<v.size()<<endl;
-
+    cout<<"most influencer is "<<getMostInfluencer(adj, antiID)<<endl;
 }
 int main() {
 #ifndef ONLINE_JUDGE
