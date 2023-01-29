@@ -5,10 +5,10 @@
 
 using namespace std;
 
-void consistent(){
+void consistent(string input, string output){
     stack<string> stack;
-    ifstream in("sample.xml");
-    ofstream out("output.xml");
+    ifstream in(input);
+    ofstream out(output);
     string line;
     while (getline(in,line))
     {
@@ -83,11 +83,11 @@ void consistent(){
         }
     }
 }
-void pretify(){
+void pretify(string input, string output){
     int depth = 0;
     int depthfornextline = 0;
-    ifstream in("sample.xml");
-    ofstream out("output.xml");
+    ifstream in(input);
+    ofstream out(output);
     string line;
     while (getline(in,line))
     {
@@ -131,8 +131,4 @@ void pretify(){
         out<<line2<<endl;
         depthfornextline = depth;
     }
-}
-int main()
-{
-    pretify();
 }

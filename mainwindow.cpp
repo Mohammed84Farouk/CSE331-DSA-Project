@@ -3,6 +3,7 @@
 #include "mainwindow.h"
 #include "compression_decompression/huffman.cpp"
 #include "xml_to_json/xmlToJson.cpp"
+#include "identation/identation.cpp"
 
 MainWindow::MainWindow() : textEdit(new QPlainTextEdit) {
     createActions();
@@ -39,6 +40,8 @@ MainWindow::MainWindow() : textEdit(new QPlainTextEdit) {
 
     connect(compressButton, &QPushButton::released, this, &MainWindow::compressButtonClicked);
     connect(decompressButton, &QPushButton::released, this, &MainWindow::decompressButtonClicked);
+    connect(checkButton, &QPushButton::released, this, &MainWindow::validateButtonClicked);
+    connect(prettifyingButton, &QPushButton::released, this, &MainWindow::prettifyingButtonClicked);
     connect(minifyingButton, &QPushButton::released, this, &MainWindow::minifyingButtonClicked);
     connect(toJSONButton, &QPushButton::released, this, &MainWindow::jsonButtonClicked);
 
@@ -102,6 +105,38 @@ void MainWindow::decompressButtonClicked() {
             huffman.decompress();
             QMessageBox::about(this, tr("Success"),
                      tr("File decompressed successfully."));
+        }
+        catch (exception) {
+            QMessageBox::about(this, tr("Error"),
+                     tr("Something went wrong."));
+        }
+    }
+}
+
+void MainWindow::validateButtonClicked() {
+    QString fileName = QFileDialog::getOpenFileName(this);
+//    qInfo() << fileName;
+    if (!fileName.isEmpty()) {
+        try {
+            consistent(fileName.toStdString(), "output.xml");
+            QMessageBox::about(this, tr("Success"),
+                     tr("File validated successfully."));
+        }
+        catch (exception) {
+            QMessageBox::about(this, tr("Error"),
+                     tr("Something went wrong."));
+        }
+    }
+}
+
+void MainWindow::prettifyingButtonClicked() {
+    QString fileName = QFileDialog::getOpenFileName(this);
+//    qInfo() << fileName;
+    if (!fileName.isEmpty()) {
+        try {
+            pretify(fileName.toStdString(), "output.xml");
+            QMessageBox::about(this, tr("Success"),
+                     tr("File pretified successfully."));
         }
         catch (exception) {
             QMessageBox::about(this, tr("Error"),

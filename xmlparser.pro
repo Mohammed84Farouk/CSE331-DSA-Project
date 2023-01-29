@@ -5,7 +5,8 @@ HEADERS       = mainwindow.h
 SOURCES       = main.cpp \
                 mainwindow.cpp \
                 compression_decompression/huffman.cpp \
-                xml_to_json/xmlToJson.cpp
+                xml_to_json/xmlToJson.cpp \
+                identation/identation.cpp
 
 RESOURCES     = xmlparser.qrc
 

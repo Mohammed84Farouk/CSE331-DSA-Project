@@ -19,6 +19,7 @@ object_script.*.Debug
 /.idea/
 /cmake-build-debug/
 /CMakeLists.txt
+/.vscode/
 *.pro.user
 *.pro.user.*
 *.qbs.user
