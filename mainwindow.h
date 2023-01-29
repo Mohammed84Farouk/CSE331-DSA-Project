@@ -47,6 +47,7 @@ private:
     void compressButtonClicked();
     void decompressButtonClicked();
     void minifyingButtonClicked();
+    void jsonButtonClicked();
     QWidget *central;
     QString strippedName(const QString &fullFileName);
     QPlainTextEdit *textEdit;

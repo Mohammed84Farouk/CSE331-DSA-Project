@@ -2,6 +2,7 @@
 
 #include "mainwindow.h"
 #include "compression_decompression/huffman.cpp"
+#include "xml_to_json/xmlToJson.cpp"
 
 MainWindow::MainWindow() : textEdit(new QPlainTextEdit) {
     createActions();
@@ -39,6 +40,7 @@ MainWindow::MainWindow() : textEdit(new QPlainTextEdit) {
     connect(compressButton, &QPushButton::released, this, &MainWindow::compressButtonClicked);
     connect(decompressButton, &QPushButton::released, this, &MainWindow::decompressButtonClicked);
     connect(minifyingButton, &QPushButton::released, this, &MainWindow::minifyingButtonClicked);
+    connect(toJSONButton, &QPushButton::released, this, &MainWindow::jsonButtonClicked);
 
     horizontalGroupBox->addLayout(verticalGroupBox);
 
@@ -111,6 +113,16 @@ void MainWindow::decompressButtonClicked() {
 void MainWindow::minifyingButtonClicked() {
 //        QMessageBox::about(this, tr("About XML Parser"), );
 //        textEdit->setPlainText(minifying(textEdit->toPlainText().toStdString()).data());
+}
+
+void MainWindow::jsonButtonClicked() {
+//    QString temp1 = minifying(textEdit->toPlainText().toStdString().data()).data();
+//    vector<string> temp2 = tags(temp1.toStdString());
+//    vector<string> temp3 = tagsData(temp1.toStdString());
+//    for (int i = 0 ; i < (int)temp3.size() ; i++) {
+//        outputConsole->appendPlainText(temp3.at(i).data());
+//    }
+    outputConsole->setPlainText(xmlToJSON(textEdit->toPlainText().toStdString()).data());
 }
 
 void MainWindow::closeEvent(QCloseEvent *event) {
