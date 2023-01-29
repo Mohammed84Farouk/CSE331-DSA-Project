@@ -63,7 +63,7 @@ void consistent(string input, string output){
             }
             if (closeTag[0] == '<' && closeTag[1] == '/' && closeTag[z-1] == '>'){
                 out << text ;
-                if(stack.empty() == false){
+                if(stack.empty() == true){
                     out << '<' << closeTag.substr(2, z-3) << '>';
                     out << closeTag;
                     out <<endl;
