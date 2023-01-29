@@ -1,0 +1,22 @@
+4
+1 Mohammed
+2
+hi this is Mohammed, and I'm using facebook
+hi there this is Mohammed, and I'm using LinkedIn
+2 2 4
+2 ahmed
+2
+hi this is ahmed, and I'm using instagram
+hi! this is ahmed, and I'm using LinkedIn
+2 3 4
+3 Ali
+4
+hi this is Ali, and I'm using facebook
+hi there this is Ali, and I'm using GitHub
+hi! is Ali, and I'm using LinkedIn
+hello, this is Ali, and I'm using Twitter
+1 2
+4 Marwan
+1
+hello, this is Marwan, and I'm using Twitter
+2 1 3
