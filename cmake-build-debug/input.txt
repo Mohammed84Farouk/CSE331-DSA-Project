@@ -3,7 +3,7 @@
 2
 hi this is Mohammed, and I'm using facebook
 hi there this is Mohammed, and I'm using LinkedIn
-2 2 4
+3 2 3 4
 2 ahmed
 2
 hi this is ahmed, and I'm using instagram
@@ -20,3 +20,5 @@ hello, this is Ali, and I'm using Twitter
 1
 hello, this is Marwan, and I'm using Twitter
 3 1 3 4
+
+

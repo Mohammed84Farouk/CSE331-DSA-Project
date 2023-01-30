@@ -47,7 +47,7 @@ void SS(){
         }
         v.push_back(u);
     }
-    cout<<"most influencer is "<<getMostInfluencer(adj, antiID)<<endl;
+    cout<<"The most Influencer is "<<getMostInfluencer(adj, antiID)<<endl;
 }
 int main() {
 #ifndef ONLINE_JUDGE
