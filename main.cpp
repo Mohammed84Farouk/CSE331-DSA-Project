@@ -110,6 +110,12 @@ vector<string> tagsData(string minifiedString){
     }
     return DataOfTags;
 }
+
+
+
+
+
+
 int main() {
 #ifndef ONLINE_JUDGE
     freopen("input.txt","r",stdin);
