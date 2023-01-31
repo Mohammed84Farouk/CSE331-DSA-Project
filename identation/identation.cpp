@@ -158,8 +158,3 @@ void pretify(string input, string output){
         } 
     }
 }
-int main(int argc, const char** argv) {
-    consistent("sample.xml", "output.xml");
-    pretify("output.xml","final.xml");
-    return 0;
-}
