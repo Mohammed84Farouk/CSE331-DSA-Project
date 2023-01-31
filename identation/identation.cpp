@@ -81,7 +81,7 @@ void consistent(string input, string output){
 }
 void pretify(string input, string output){
     int depth = 0;
-    int depthfornextline = 0;
+    int depthfornextline = -1;
     stack<string> stack;
     ifstream in(input);
     ofstream out(output);
@@ -120,27 +120,28 @@ void pretify(string input, string output){
             if(i < 3) continue;
 
             if (openTag[0] == '<' && openTag[1] != '/' && openTag[j-1] == '>' && !tagPushed){
+                depth++;
+                if(depth == depthfornextline) out<<endl;
                 if(openTag[1] != '?') stack.push(openTag.substr(1,j-2));
+                depthfornextline++;
                 tagPushed = true;
-                if(depth = depthfornextline + 1)
+                depth = depthfornextline-1;
                 for (int w = 0; w < depthfornextline; w++)
                 {
                     out<<'\t';
                 }
                 out << openTag.substr(0,j-1) << '>';
-                out<<endl;
-                depth = depthfornextline;
-                depthfornextline++;
             }
             if (closeTag[0] == '<' && closeTag[1] == '/' && closeTag[z-1] == '>'){
-                for (int w = 0; w < depthfornextline; w++)
+                out<<endl;
+                for (int w = 0; w < depthfornextline+1; w++)
                 {
                     out<<'\t';
                 }
                 out<< text <<endl;
                 text = "";
                 depthfornextline--;
-                for (int w = 0; w < depthfornextline; w++)
+                for (int w = 0; w < depthfornextline+1; w++)
                 {
                     out<<'\t';
                 }

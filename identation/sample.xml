@@ -1,11 +1,12 @@
 <users>
     <user>
-        1</id>
+        <id> 1</id>
         <name>Ahmed Ali</name>
         <posts>
             <post>
                 <body>
-                    Lorem .
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                </body>
                 <topics>
                     <topic>
                         economy
@@ -17,7 +18,7 @@
             </post>
             <post>
                 <body>
-                    Lorem .
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                 </body>
                 <topics>
                     <topic>
