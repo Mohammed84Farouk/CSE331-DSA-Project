@@ -1,0 +1,40 @@
+
+<users>
+		<user>            1<id></id>
+		<name>        Ahmed Ali</name>
+		<posts>        
+			<post>            
+					<body>                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.                <body></body>
+					<topics>                
+							<topic>                                            economy                    <topic></topic>
+								<topic>                                            finance                    <topic></topic>                <topics></topics>            <post></post>
+								<post>            
+										<body>                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.                <body></body>
+										<topics>                
+												<topic>                                            solar_energy                    <topic></topic>                <topics></topics>            <post></post>        <posts></posts>
+												<followers>        
+													<follower>            
+														<id>                2</id>            <follower></follower>
+														<follower>            
+															<id>                3</id>            <follower></follower>        <followers></followers>    <user></user>
+															<user>    
+																<id>        2</id>
+																<name>        Yasser Ahmed</name>
+																<posts>        
+																	<post>            
+																			<body>                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.                <body></body>
+																			<topics>                
+																					<topic>                                            education                    <topic></topic>                <topics></topics>            <post></post>        <posts></posts>
+																					<followers>        
+																						<follower>            
+																							<id>                1</id>            <follower></follower>        <followers></followers>    <user></user>
+																							<user>    
+																								<id>        3</id>
+																								<name>        Mohamed Sherif</name>
+																								<posts>        
+																									<post>            
+																											<body>                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.                <body></body>
+																											<topics>                
+																													<topic>                                            sports                    <topic></topic>                <topics></topics>            <post></post>        <posts></posts>
+																													<followers>        
+																														<follower>            
