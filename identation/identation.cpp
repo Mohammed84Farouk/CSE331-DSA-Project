@@ -20,9 +20,15 @@ void consistent(string input, string output){
         bool closingtag = false;
         for (int i = 0, j = 0, z = 0; i < line.length(); i++)
         {
-            if(line[i] == '<' && line[i+1] == '/') closingtag = true;
+            if(line[i] == '<' && line[i+1] == '/') {
+                closingtag = true;
+                closeTag = "";
+                z = 0;
+            }
             else if(line[i] == '<' && line[i+1] != '/' && line[i+1] != '?' ) {
                 tagPushed = false;
+                openTag = "";
+                j = 0;
             }
             if(closingtag) {
                 closeTag += line[i];
@@ -32,24 +38,29 @@ void consistent(string input, string output){
                 openTag += line[i];
                 j++;
             }
-            else if(!closingtag) text += line[i];
-            if(i < 3) continue;
+            else if(!closingtag){
+                if(line[i] == ' ' && text.size() == 0) continue;
+                text += line[i];
+            }
 
 
             if (openTag[0] == '<' && openTag[1] != '/' && openTag[j-1] == '>' && !tagPushed){
                 if(openTag[1] != '?') stack.push(openTag.substr(1,j-2));
                 stackempty = false;
                 tagPushed = true;
-
-                out<<endl;
                 out << openTag.substr(0,j-1) << '>';
+                out<<endl;
+                openTag = "";
             }
             if (closeTag[0] == '<' && closeTag[1] == '/' && closeTag[z-1] == '>'){
                 out << text ;
+                text = "";
                 if(stackempty){
                     out<<endl;
                     out << '<' << closeTag.substr(2,z-3) << '>';
                     out << '<' << '/' << closeTag.substr(2,z-3) << '>';
+                    closeTag ="";
+                    closingtag = false;
                 }
                 else if(closeTag.substr(2, z-3) != stack.top()){
                     out << '<' << '/' << stack.top() << '>';
@@ -60,32 +71,37 @@ void consistent(string input, string output){
                         out << closeTag;
                         stack.pop();
                         stackempty = stack.empty();
+                        closeTag = "";
+                        closingtag = false;
                     }
-                    else {
+                    else
+                    {
                         out << '<' << closeTag.substr(2,z-3) << '>';
                         out << '<' << '/' << closeTag.substr(2,z-3) << '>';
                     }
+                    closeTag ="";
+                    closingtag = false;
                     continue;
                 } 
                 else{
-                    if(text.size() < 1){
-                        out << endl;
-                    } 
-                    out << closeTag;
+                    out << text << endl << closeTag <<endl;
+                    text = "";
                     stack.pop();
                     stackempty = stack.empty();
+                    closeTag ="";
+                    closingtag = false;
                 }
             }else if (i == line.length() -1) out << text;
         }
     }
 }
 void pretify(string input, string output){
-    int depth = 0;
     int depthfornextline = -1;
-    stack<string> stack;
     ifstream in(input);
     ofstream out(output);
     string line;
+    bool wastag = false;
+    bool wasctag = false;
     while (getline(in,line))
     {
         string openTag;
@@ -95,7 +111,7 @@ void pretify(string input, string output){
         bool closingtag = false;
         for (int i = 0, j = 0, z = 0; i < line.length(); i++)
         {
-            if (line[i] == ' ' && (openTag.size() == 0 || text.size() == 0)){
+            if (line[i] == ' ' && (openTag.size() == 0 && text.size() == 0)){
                 continue;
             }
             if(line[i] == '<' && line[i+1] == '/') {
@@ -117,42 +133,50 @@ void pretify(string input, string output){
                 j++;
             }
             else if(!closingtag) text += line[i];
-            if(i < 3) continue;
 
             if (openTag[0] == '<' && openTag[1] != '/' && openTag[j-1] == '>' && !tagPushed){
-                depth++;
-                if(depth == depthfornextline) out<<endl;
-                if(openTag[1] != '?') stack.push(openTag.substr(1,j-2));
                 depthfornextline++;
                 tagPushed = true;
-                depth = depthfornextline-1;
+                if(wastag == true  || wasctag == true) out<<endl;
+                wastag = true;
+                wasctag = false;
                 for (int w = 0; w < depthfornextline; w++)
                 {
                     out<<'\t';
                 }
                 out << openTag.substr(0,j-1) << '>';
+                openTag = "";
+                text = "";
             }
             if (closeTag[0] == '<' && closeTag[1] == '/' && closeTag[z-1] == '>'){
-                out<<endl;
+                if(text.size() != 0) out<<endl;
                 for (int w = 0; w < depthfornextline+1; w++)
                 {
                     out<<'\t';
                 }
-                out<< text <<endl;
-                text = "";
+                wastag = false;
+                wasctag = true;
+                if(text.size() != 0){
+                    out<< text;
+                    text = "";           
+                }
                 depthfornextline--;
+                if(wasctag || wastag) out<<endl;
                 for (int w = 0; w < depthfornextline+1; w++)
                 {
                     out<<'\t';
                 }
-                out << closeTag << endl;
+                out << closeTag;
+                closeTag = "";
+                closingtag = false;
 
             }else if (i == line.length() -1){
-                for (int w = 0; w < depthfornextline; w++)
+                if(text.size() != 0) out<<endl;
+                for (int w = 0; w < depthfornextline+1; w++)
                 {
                     out<<'\t';
                 }
-                out << text <<endl;
+                out << text;
                 text = "";
             }
         } 
