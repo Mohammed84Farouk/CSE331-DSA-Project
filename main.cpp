@@ -5,7 +5,8 @@
 #include "mainwindow.h"
 
 int main(int argc, char *argv[]) {
-    Q_INIT_RESOURCE(xmlparser);
+//    Uncomment this line if you're using qmake instead of CMake
+//    Q_INIT_RESOURCE(xmlparser);
 
     QApplication app(argc, argv);
     QCoreApplication::setOrganizationName("CSE331-Project");

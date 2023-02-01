@@ -148,14 +148,17 @@ void MainWindow::prettifyingButtonClicked() {
 
 void MainWindow::minifyingButtonClicked() {
 //        QMessageBox::about(this, tr("About XML Parser"), );
-//        textEdit->setPlainText(minifying(textEdit->toPlainText().toStdString()).data());
+//        textEdit->setPlainText(minify(textEdit->toPlainText().toStdString()).data());
 }
 
 void MainWindow::jsonButtonClicked() {
     QPlainTextEdit *jsonViewer = new QPlainTextEdit();
     jsonViewer -> setReadOnly(true);
+    jsonViewer->setFixedHeight(800);
+    jsonViewer->setFixedWidth(1600);
     try {
-        jsonViewer->setPlainText(xmlToJSON(textEdit->toPlainText().toStdString()).data());
+        Xml *xml = new Xml(textEdit->toPlainText().toStdString());
+        jsonViewer->setPlainText(xml->xmlToJSON().data());
     }
     catch (exception) {
         QMessageBox::about(this, tr("Error"),
