@@ -6,8 +6,8 @@ private:
     string xml;
 //f1
 public:
-    Xml(string s){
-        xml = s;
+    Xml(string string1){
+        xml = string1;
     }
     string minifying(string s) {
         int stringSize = s.size();
@@ -20,7 +20,7 @@ public:
             if (s[i] == '\n') {
                 continue;
             } else if (s[i] == ' ') {
-                if ((s[i - 1] == ' ') || (s[i - 1] == '>' && s[i + 1] == '<'))
+                if ((s[i - 1] == ' ') || (s[i + 1] == ' ') ||(s[i - 1] == '>' || s[i + 1] == '<') || (s[i + 1] == '>' || s[i - 1] == '<'))
                     continue;
                 else
                     str1 += s[i];
@@ -36,7 +36,8 @@ public:
 
 //f2
 //returns vector of closing and opening tags
-    vector<string> tags(string minifiedString) {
+    vector<string> tags() {
+        string minifiedString = minifying(xml);
         string tagName;
         vector<string> tagsNames;
         bool openTheTag = false;
@@ -62,7 +63,8 @@ public:
 
 //f3
 //gets the data of each tag
-    vector<string> tagsData(string minifiedString) {
+    vector<string> tagsData() {
+        string minifiedString = minifying(xml);
         vector<string> DataOfTags;
         int minifiedStringSize = minifiedString.size();
         string temp;
@@ -134,8 +136,8 @@ public:
     string xmlToJSON() {
         //preparing xml to be converted
         string minifiedString = minifying(xml);
-        vector<string> tagsNames = tags(minifiedString);
-        vector<string> myTagsData = tagsData(minifiedString);
+        vector<string> tagsNames = tags();
+        vector<string> myTagsData = tagsData();
         int tagsNamesSize = tagsNames.size();
         vector<bool> isArrayTag = arrayTag(tagsNamesSize, tagsNames);
         vector<string> keyOfArrayElements;
@@ -237,7 +239,7 @@ public:
 int main() {
     string s = "<users><user><id>1</id><name>Ahmed Ali</name><posts><post><body> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </body><topics><topic> economy </topic><topic> finance </topic></topics></post><post><body> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </body><topics><topic> solar_energy </topic></topics></post></posts><followers><follower><id>2</id></follower><follower><id>3</id></follower></followers></user><user><id>2</id><name>Yasser Ahmed</name><posts><post><body> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </body><topics><topic> education </topic></topics></post></posts><followers><follower><id>1</id></follower></followers></user><user><id>3</id><name>Mohamed Sherif</name><posts><post><body> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </body><topics><topic> sports </topic></topics></post></posts><followers><follower><id>1</id></follower></followers></user></users>";
     Xml xml =  Xml(s);
-    string Json = xml.minifying(s);
+    string Json = xml.xmlToJSON();
     cout<<Json;
 }
 
