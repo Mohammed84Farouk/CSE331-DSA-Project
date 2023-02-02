@@ -95,19 +95,28 @@ public:
     }
 
 //f4
-//check if my tag is array or not, this code was a separate function but it introduces some bugs
+//check if my tag is array or not
     vector<bool> arrayTag(int tagsNamesSize, vector<string> tagsNames) {
         vector<bool> isArrayTag;
-        int j = 0;
-        for (int i = 0; i < tagsNamesSize; i++) {
+        for (int i = 0; i < tagsNamesSize-1; i++) {
+            bool Array = false;
             if (tagsNames[i].at(0) != '/') {
-                if (tagsNames[i].at(tagsNames[i].length() - 1) == 's') {
-                    isArrayTag.push_back(true);
-                } else {
-                    isArrayTag.push_back(false);
+                for (int j = i+2; j < tagsNamesSize-2 ; j++) {
+                    if(tagsNames[i+1].at(0) != '/'){ // if the next tag to the main tag (i.e tagNames[i]) is not closing tag
+                        if(tagsNames[j] == "/"+tagsNames[i+1] && tagsNames[j+1] == tagsNames[i+1]){
+                            Array= true;
+                            break;
+                        }
+                    }
+                    else{
+                        Array= false;
+                        break;
+                    }
                 }
+                isArrayTag.push_back(Array);
             }
         }
+        isArrayTag.push_back(false);
         return isArrayTag;
     }
 
@@ -123,9 +132,8 @@ public:
 
 //f6
 //xml to json function
-    string xmlToJSON() {
-        //preparing xml to be converted
-        string minifiedString = minifying(xml);
+    string xmlToJSON(string minifiedString) {
+            //preparing xml to be converted
         vector<string> tagsNames = tags(minifiedString);
         vector<string> myTagsData = tagsData(minifiedString);
         int tagsNamesSize = tagsNames.size();

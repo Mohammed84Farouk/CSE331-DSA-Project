@@ -158,7 +158,8 @@ void MainWindow::jsonButtonClicked() {
     jsonViewer->setFixedWidth(1600);
     try {
         Xml *xml = new Xml(textEdit->toPlainText().toStdString());
-        jsonViewer->setPlainText(xml->xmlToJSON().data());
+        string minifiedXml = xml->minifying(textEdit->toPlainText().toStdString());
+        jsonViewer->setPlainText(xml->xmlToJSON(minifiedXml).data());
     }
     catch (exception) {
         QMessageBox::about(this, tr("Error"),
