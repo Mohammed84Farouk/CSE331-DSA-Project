@@ -7,12 +7,14 @@ public:
     struct post{
         string body;
         vector<string>topics;
+        post(){}
     };
     struct user {
         int id;                                                 // they are given in an increasing order starting from 1
         string name;
         vector<post> posts;
         vector<int> followers;
+        user(){}
         user(int _id, string _name) { id = _id, name = _name; }
     };
     vector<user>v;
@@ -70,6 +72,51 @@ public:
         }
         return DataOfTags;
     }
+    vector<string> tags(string minifiedString) {
+        string tagName;
+        vector<string> tagsNames;
+        bool openTheTag = false;
+        int stringSize = minifiedString.size();
+        for (int i = 0; i < stringSize; i++) {
+            if (minifiedString[i] == '<') {
+                openTheTag = true;
+                continue;
+            }
+            if (openTheTag) {
+                if (minifiedString[i] == '>') {
+                    openTheTag = false;
+                    if(tagName.find("/")==string::npos) tagsNames.push_back(tagName);
+                    tagName = "";
+                    continue;
+                } else {
+                    tagName += minifiedString[i];
+                }
+            }
+        }
+        return tagsNames;
+    }
+    void createFile(vector<user>&users){
+        ofstream MyFile("newOne.txt");
+        MyFile<<users.size()<<'\n';
+        for(int i=0;i<users.size();i++){
+            MyFile<<users[i].id<<" "<<users[i].name<<'\n';
+            MyFile<<users[i].posts.size()<<'\n';
+            for(int j=0;j<users[i].posts.size();j++){
+                MyFile<<users[i].posts[j].body<<'\n';
+                MyFile<<users[i].posts[j].topics.size()<<'\n';
+                for(auto&k:users[i].posts[j].topics) MyFile<<k<<'\n';
+            }
+            if(users[i].followers.empty()) MyFile<<"0\n";
+            else {
+                MyFile << users[i].followers.size() << " ";
+                for (int j = 0; j < users[i].followers.size(); j++) {
+                    MyFile << users[i].followers[j];
+                    if (j == users[i].followers.size() - 1) MyFile << '\n';
+                    else MyFile << " ";
+                }
+            }
+        }
+    }
     void takeInput(SNA&sna){
         int n;
         cin>>n;
@@ -109,11 +156,57 @@ public:
     void extractInputFromMinifiedXML(string&s, SNA&sna){
         string temp;
         s= minifying(s);
-        auto data= tagsData(s);
-        for(auto x:data) cout<<x<<" ";
+        auto TAGS=sna.tags(s);
+        auto DATA=sna.tagsData(s);
+        for(auto&x:TAGS) cout<<x<<" ";
         cout<<endl;
-        vector<string>res;
-        sna.takeInput(sna);
+        for(auto&x:DATA) cout<<x<<" ";
+        cout<<endl;
+        int sz=(int)DATA.size();
+        vector<user>users;
+        for(int i=0;i<sz;i++){
+            user u;
+            if(TAGS[i]=="users") continue;
+            else if(TAGS[i]=="user"){
+                int j;
+                for(j=i+1;j<sz;j++, i=j-1){
+                    if(TAGS[j]=="id") u.id=stoi(DATA[j]);
+                    else if(TAGS[j]=="name") u.name=DATA[j];
+                    else if(TAGS[j]=="posts" || TAGS[j]=="followers") continue;
+                    else if(TAGS[j]=="post"){
+                        post p;
+                        int k;
+                        for(k=j+1;k<sz;k++, j=k-1){
+                            if(TAGS[k]=="body") p.body=DATA[k];
+                            else if(TAGS[k]=="topics") continue;
+                            else if(TAGS[k]=="topic") p.topics.push_back(DATA[k]);
+                            else{                       //followers
+                                u.posts.push_back(p);
+                                break;
+                            }
+                        }
+                        j=k-1;
+                    }
+                    else if(TAGS[j]=="follower"){
+                        int k;
+                        for(k=j+1;k<sz;k++, j=k-1){
+                            if(TAGS[k]=="id") u.followers.push_back(stoi(DATA[k]));
+                            else                        //followers
+                                break;
+                        }
+                        j=k-1;
+                    }
+                    else{               // user
+                        users.push_back(u);
+                        break;
+                    }
+                    if(j==sz-1) users.push_back(u);
+                }
+                i=j-1;
+            }
+        }
+        cout<<users.size()<<endl;
+        createFile(users);
     }
     string getMostInfluencer(SNA&sna) {                             // O(n^2)
         int mx = 0, influencer = -1;
@@ -133,7 +226,7 @@ public:
             }
         return sna.antiID[active];
     }
-    vector<string>getMutualFriends(string&a, string&b, SNA&sna){                // O(n^2)
+    vector<string>getMutualFollowers(string&a, string&b, SNA&sna){                // O(n^2)
         vector<string>mutuals;
         for(int x:adj[sna.ID[a]])
             for(int y:adj[sna.ID[b]])
@@ -142,41 +235,46 @@ public:
         return mutuals;
     }
     vector<string>suggestFollowers(string&a, SNA&sna){                          // O(n^2)
-        vector<string>suggestedFriends;
+        vector<string>suggestedFollowers;
         unordered_map<int, int>temp;
         temp[sna.ID[a]]=-1;
         for(int x:adj[sna.ID[a]]) temp[x]=-1;
         for(int x:adj[sna.ID[a]])
             for(int y:adj[x])
                 if(~temp[y])
-                    suggestedFriends.push_back(sna.antiID[y]), temp[y]=-1;
-        return suggestedFriends;
+                    suggestedFollowers.push_back(sna.antiID[y]), temp[y]=-1;
+        return suggestedFollowers;
+    }
+    string getHighestBetweenness(SNA&sna){
+
     }
 };
 
 int main() {
     FIO
-    ofstream MyFile("newInput.txt");
-    string s = "<users><user><id>1</id><name>Mohammed Farouk</name><posts><post><body>hi this is Mohammed Farouk, and I'm using facebook</body><topics><topic> work </topic></topics></post><post><body> I'm in love with codeforces </body><topics><topic> personal </topic></topics></post></posts><followers><follower><id>3</id></follower><follower><id>4</id></follower></followers></user>"
-               "<user><id>2</id><name>Karim</name><posts><post><body>hi this is Karim, and I'm using instagram</body><topics><topic> work </topic></topics></post><post><body> hi this is Karim, and I'm using LinkedIn </body><topics><topic> work </topic></topics></post></posts><followers><follower><id>3</id></follower><follower><id>4</id></follower></followers></user>"
-               "<user><id>3</id><name>Ali</name><posts><post><body>this is not a priority for me to interfere with others work.</body><topics><topic> personal </topic><topic> nightly e3trafat </topic></topics></post><post><body> hi this is Ali, and I'm using facebook </body><topics><topic> work </topic></topics></post><post><body> hi there this is Ali, and I'm using GitHub </body><topics><topic> work </topic></topics></post><post><body> hello, this is Ali, and I'm using Twitter </body><topics><topic> work </topic></topics></post><post><body> hi! is Ali, and I'm using LinkedIn </body><topics><topic> work </topic></topics></post></posts><followers><follower><id>1</id></follower></followers></user>"
-               "<user><id>4</id><name>Marwan Ahmed</name><posts><post><body>I wish I had friends</body><topics><topic> personal </topic></topics></post></posts><followers><follower><id>1</id></follower><follower><id>2</id></follower><follower><id>3</id></follower></followers></user>";
-    // MyFile<<temp;
-    // freopen("newInput.txt","r",stdin);
+    //    freopen("newInput.txt","r",stdin);
     freopen("input.txt","r",stdin);
     freopen("output.txt","w",stdout);
+    string s = "<users><user><id>1</id><name>Mohammed Farouk</name><posts><post><body>hi this is Mohammed Farouk, and I'm using facebook</body><topics><topic> work </topic></topics></post><post><body> I'm in love with codeforces </body><topics><topic> personal </topic></topics></post></posts><followers><follower><id>3</id></follower><follower><id>4</id></follower></followers></user>"
+               "<user><id>2</id><name>Karim</name><posts><post><body>hi this is Karim, and I'm using instagram</body><topics><topic> work </topic></topics></post><post><body> hi this is Karim, and I'm using LinkedIn </body><topics><topic> work </topic></topics></post></posts><followers><follower><id>1</id></follower><follower><id>3</id></follower><follower><id>4</id></follower></followers></user>"
+               "<user><id>3</id><name>Ali</name><posts><post><body>this is not a priority for me to interfere with others work.</body><topics><topic> personal </topic><topic> nightly e3trafat </topic></topics></post><post><body> hi this is Ali, and I'm using facebook </body><topics><topic> work </topic></topics></post><post><body> hi there this is Ali, and I'm using GitHub </body><topics><topic> work </topic></topics></post><post><body> hello, this is Ali, and I'm using Twitter </body><topics><topic> work </topic></topics></post><post><body> hi! is Ali, and I'm using LinkedIn </body><topics><topic> work </topic></topics></post></posts><followers><follower><id>2</id></follower><follower><id>4</id></follower></followers></user>"
+               "<user><id>4</id><name>Marwan Ahmed</name><posts><post><body>I wish I had friends</body><topics><topic> personal </topic></topics></post></posts><followers><follower><id>1</id></follower><follower><id>2</id></follower></followers></user>";
     SNA sna=SNA();
+    auto TAGS=sna.tags(sna.minifying(s));
+    auto DATA=sna.tagsData(sna.minifying(s));
     sna.extractInputFromMinifiedXML(s, sna);
+    sna.takeInput(sna);
+
     cout<<"The most Influencer is "<<sna.getMostInfluencer(sna)<<endl;
     cout<<"The most Active is "<<sna.getMostActive(sna)<<endl;
     string user1="Ali", user2="Marwan Ahmed";
-    vector<string>mutuals=sna.getMutualFriends(user1, user2, sna);
-    cout<<"Mutual friends between "<<user1<<" & "<<user2<<": ";
+    vector<string>mutuals=sna.getMutualFollowers(user1, user2, sna);
+    cout<<"Mutual followers between "<<user1<<" & "<<user2<<": ";
     for(auto&x:mutuals) cout<<x<<" ";
     cout<<endl;
     user1="Mohammed Farouk";
     vector<string>sug=sna.suggestFollowers(user1, sna);
-    cout<<"Suggested friends for "<<user1<<": ";
+    cout<<"Suggested followers for "<<user1<<": ";
     for(auto&x:sug) cout<<x<<" ";
     cout<<endl;
     return 0;

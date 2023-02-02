@@ -7,8 +7,7 @@ work
 I'm in love with codeforces
 1 personal
 2 3 4
-2
-Karim
+2 Karim
 2
 hi this is Karim, and I'm using instagram
 1
@@ -16,7 +15,7 @@ work
 hi! this is Karim, and I'm using LinkedIn
 1
 work
-2 3 4
+3 1 3 4
 3 Ali
 5
 this is not a priority for me to interfere with others work.
@@ -29,16 +28,16 @@ work
 hi there this is Ali, and I'm using GitHub
 1
 work
-hi! is Ali, and I'm using LinkedIn
-1
-work
 hello, this is Ali, and I'm using Twitter
 1
 work
-1 2
+hi! is Ali, and I'm using LinkedIn
+1
+work
+2 2 4
 4 Marwan Ahmed
 1
 I wish I had friends
 1
 personal
-3 1 2 3
+2 1 2
