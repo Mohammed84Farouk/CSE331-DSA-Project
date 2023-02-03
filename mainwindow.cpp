@@ -2,8 +2,15 @@
 
 #include "mainwindow.h"
 #include "compression_decompression/huffman.cpp"
-#include "xml_to_json/xmlToJson.cpp"
 #include "identation/identation.cpp"
+#include "SNA_graph/main.cpp"
+
+SNA *sna = nullptr;
+vector<user> users;
+vector<vector<int>> adj;
+pair<unordered_map<string,int>, vector<string>> p;
+unordered_map<string, int> ID;
+vector<string> antiID;
 
 MainWindow::MainWindow() : textEdit(new QPlainTextEdit) {
     createActions();
@@ -14,14 +21,9 @@ MainWindow::MainWindow() : textEdit(new QPlainTextEdit) {
 
     QVBoxLayout *mainLayout = new QVBoxLayout;
 
-    QHBoxLayout *horizontalGroupBox = new QHBoxLayout;
-
-    horizontalGroupBox-> addWidget(textEdit);
-
-    QVBoxLayout *verticalGroupBox = new QVBoxLayout;
+    QHBoxLayout *mainButtons = new QHBoxLayout;
 
     checkButton = new QPushButton(tr("Validate"));
-    fixButton = new QPushButton(tr("Fix"));
     compressButton = new QPushButton(tr("Compress"));
     decompressButton = new QPushButton(tr("Decompress"));
     prettifyingButton = new QPushButton(tr("Prettify"));
@@ -29,14 +31,13 @@ MainWindow::MainWindow() : textEdit(new QPlainTextEdit) {
     toJSONButton = new QPushButton(tr("Json"));
     toGRAPHButton = new QPushButton(tr("Graph"));
 
-    verticalGroupBox-> addWidget(checkButton);
-    verticalGroupBox-> addWidget(fixButton);
-    verticalGroupBox-> addWidget(compressButton);
-    verticalGroupBox-> addWidget(decompressButton);
-    verticalGroupBox-> addWidget(prettifyingButton);
-    verticalGroupBox-> addWidget(minifyingButton);
-    verticalGroupBox-> addWidget(toJSONButton);
-    verticalGroupBox-> addWidget(toGRAPHButton);
+    mainButtons-> addWidget(checkButton);
+    mainButtons-> addWidget(compressButton);
+    mainButtons-> addWidget(decompressButton);
+    mainButtons-> addWidget(prettifyingButton);
+    mainButtons-> addWidget(minifyingButton);
+    mainButtons-> addWidget(toJSONButton);
+    mainButtons-> addWidget(toGRAPHButton);
 
     connect(compressButton, &QPushButton::released, this, &MainWindow::compressButtonClicked);
     connect(decompressButton, &QPushButton::released, this, &MainWindow::decompressButtonClicked);
@@ -44,11 +45,69 @@ MainWindow::MainWindow() : textEdit(new QPlainTextEdit) {
     connect(prettifyingButton, &QPushButton::released, this, &MainWindow::prettifyingButtonClicked);
     connect(minifyingButton, &QPushButton::released, this, &MainWindow::minifyingButtonClicked);
     connect(toJSONButton, &QPushButton::released, this, &MainWindow::jsonButtonClicked);
+    connect(toGRAPHButton, &QPushButton::released, this, &MainWindow::graphButtonClicked);
 
-    horizontalGroupBox->addLayout(verticalGroupBox);
+    QHBoxLayout *graphButtons = new QHBoxLayout;
 
-    mainLayout->addLayout(horizontalGroupBox);
-    mainLayout->addWidget(textEdit, 2.0);
+    mostInfluencerButton = new QPushButton(tr("Most Influencer"));
+    mostActiveButton = new QPushButton(tr("Most Active"));
+    mutualFollowersButton = new QPushButton(tr("Mutual Followers"));
+    suggestFollowersButton = new QPushButton(tr("Suggest Followers"));
+    postsSearchButton = new QPushButton(tr("Search post"));
+    betweennessButton = new QPushButton(tr("Betweenness (Bonus)"));
+
+    graphButtons-> addWidget(mostInfluencerButton);
+    graphButtons-> addWidget(mostActiveButton);
+    graphButtons-> addWidget(mutualFollowersButton);
+    graphButtons-> addWidget(suggestFollowersButton);
+    graphButtons-> addWidget(postsSearchButton);
+    graphButtons-> addWidget(betweennessButton);
+
+    connect(mostInfluencerButton, &QPushButton::released, this, &MainWindow::mostInfluencerButtonClicked);
+    connect(mostActiveButton, &QPushButton::released, this, &MainWindow::mostActiveButtonClicked);
+    connect(mutualFollowersButton, &QPushButton::released, this, &MainWindow::mutualFollowersButtonClicked);
+    connect(suggestFollowersButton, &QPushButton::released, this, &MainWindow::suggestFollowersButtonClicked);
+    connect(postsSearchButton, &QPushButton::released, this, &MainWindow::postsSearchButtonClicked);
+    connect(betweennessButton, &QPushButton::released, this, &MainWindow::betweennessButtonClicked);
+
+    QHBoxLayout *graphSettings = new QHBoxLayout;
+
+    topicSearchLabel = new QLabel();
+    topicSearchLabel -> setText("Topic Name for Search");
+
+    topicSearchLineEdit = new QLineEdit();
+
+    bodySearchLabel = new QLabel();
+    bodySearchLabel -> setText("Body word for Search");
+
+    bodySearchLineEdit = new QLineEdit();
+
+    firstUserLabel = new QLabel();
+    firstUserLabel -> setText("First user name");
+
+    firstUserLineEdit = new QLineEdit();
+
+    secondUserLabel = new QLabel();
+    secondUserLabel -> setText("Second user name");
+
+    secondUserLineEdit = new QLineEdit();
+
+    graphSettings -> addWidget(topicSearchLabel);
+    graphSettings -> addWidget(topicSearchLineEdit);
+    graphSettings -> addWidget(bodySearchLabel);
+    graphSettings -> addWidget(bodySearchLineEdit);
+    graphSettings -> addWidget(firstUserLabel);
+    graphSettings -> addWidget(firstUserLineEdit);
+    graphSettings -> addWidget(secondUserLabel);
+    graphSettings -> addWidget(secondUserLineEdit);
+
+    mainLayout -> addLayout(mainButtons);
+
+    mainLayout -> addLayout(graphButtons);
+
+    mainLayout -> addLayout(graphSettings);
+
+    mainLayout -> addWidget(textEdit);
 
     outputConsole = new QPlainTextEdit();
     outputConsole -> setReadOnly(true);
@@ -78,15 +137,16 @@ void MainWindow::compressButtonClicked() {
 //    qInfo() << fileName;
     if (!fileName.isEmpty()) {
         try {
+            outputConsole -> clear();
             Huffman huffman = Huffman(fileName.toStdString(), fileName.toStdString().append(".huff"));
+            outputConsole -> appendPlainText("compressing...");
             huffman.compress();
             statusBar()->showMessage(tr("File compressed to %1").arg(fileName.toStdString().append(".huff").data()));
-            QMessageBox::about(this, tr("Success"),
-                     tr("File compressed successfully."));
+            outputConsole -> appendPlainText("File compressed successfully.");
         }
-        catch (exception) {
-            QMessageBox::about(this, tr("Error"),
-                     tr("Something went wrong."));
+        catch (exception &e) {
+            outputConsole -> appendPlainText("ERROR: compressing failed for some reason.");
+            outputConsole -> appendPlainText(e.what());
         }
     }
 }
@@ -95,21 +155,21 @@ void MainWindow::decompressButtonClicked() {
     QString fileName = QFileDialog::getOpenFileName(this);
 // minimum size is 8 it doesn't make sense if the filename length is less than or equal to 8 --> "D:/.huff"
     if (fileName.length() <= 8 || fileName.toStdString().substr(fileName.length() - 5, fileName.length()) != ".huff") {
-        QMessageBox::about(this, tr("Error"),
-                 tr("Please choose a .huff file to decompress."));
-        return;
+        return outputConsole -> appendPlainText("ERROR: Please choose a .huff file to decompress.");
     }
     if (!fileName.isEmpty()) {
         try {
+            outputConsole -> clear();
             Huffman huffman = Huffman(fileName.toStdString(), fileName.toStdString().substr(0, fileName.length() - 5));
+            outputConsole -> appendPlainText("decompressing...");
             huffman.decompress();
             statusBar()->showMessage(tr("File decompressed to %1").arg(fileName.toStdString().substr(0, fileName.length() - 5).data()));
-            QMessageBox::about(this, tr("Success"),
-                     tr("File decompressed successfully."));
+            outputConsole -> appendPlainText("file decompressed successfully.");
+            outputConsole -> appendPlainText(tr("you can find it in %1.").arg(fileName.toStdString().substr(0, fileName.length() - 5).data()));
         }
-        catch (exception) {
-            QMessageBox::about(this, tr("Error"),
-                     tr("Something went wrong."));
+        catch (exception &e) {
+            outputConsole -> appendPlainText("ERROR: decompressing failed for some reason.");
+            outputConsole -> appendPlainText(e.what());
         }
     }
 }
@@ -118,14 +178,15 @@ void MainWindow::validateButtonClicked() {
     QString fileName = QFileDialog::getOpenFileName(this);
     if (!fileName.isEmpty()) {
         try {
+            outputConsole -> clear();
             consistent(fileName.toStdString(), fileName.toStdString().substr(0, fileName.length() - 4).append("_out.xml"));
             statusBar()->showMessage(tr("File validated to %1").arg(fileName.toStdString().substr(0, fileName.length() - 4).append("_out.xml").data()));
-            QMessageBox::about(this, tr("Success"),
-                     tr("File validated successfully."));
+            outputConsole -> appendPlainText("file validated successfully.");
+            outputConsole -> appendPlainText(tr("you can find it in %1.").arg(fileName.toStdString().substr(0, fileName.length() - 4).append("_out.xml").data()));
         }
-        catch (exception) {
-            QMessageBox::about(this, tr("Error"),
-                     tr("Something went wrong."));
+        catch (exception &e) {
+            outputConsole -> appendPlainText("ERROR: validating failed for some reason.");
+            outputConsole -> appendPlainText(e.what());
         }
     }
 }
@@ -134,21 +195,41 @@ void MainWindow::prettifyingButtonClicked() {
     QString fileName = QFileDialog::getOpenFileName(this);
     if (!fileName.isEmpty()) {
         try {
+            outputConsole -> clear();
             pretify(fileName.toStdString(), fileName.toStdString().substr(0, fileName.length() - 4).append("_out.xml"));
             statusBar()->showMessage(tr("File prettified to %1").arg(fileName.toStdString().substr(0, fileName.length() - 4).append("_out.xml").data()));
-            QMessageBox::about(this, tr("Success"),
-                     tr("File pretified successfully."));
+            outputConsole -> appendPlainText("file pretified successfully.");
+            outputConsole -> appendPlainText(tr("you can find it in %1.").arg(fileName.toStdString().substr(0, fileName.length() - 4).append("_out.xml").data()));
         }
-        catch (exception) {
-            QMessageBox::about(this, tr("Error"),
-                     tr("Something went wrong."));
+        catch (exception &e) {
+            outputConsole -> appendPlainText("ERROR: pretifying failed for some reason.");
+            outputConsole -> appendPlainText(e.what());
         }
     }
 }
 
 void MainWindow::minifyingButtonClicked() {
-//        QMessageBox::about(this, tr("About XML Parser"), );
-//        textEdit->setPlainText(minify(textEdit->toPlainText().toStdString()).data());
+    if (textEdit -> toPlainText().length() == 0) {
+        outputConsole -> appendPlainText("ERROR: no xml text found to start minifying.");
+        return;
+    }
+    try {
+        outputConsole -> clear();
+        outputConsole -> appendPlainText("xml object is created automatically when you open any file so it's ready for minifing.");
+        outputConsole -> appendPlainText("minifying...");
+        minifiedXml = xml->minifying(textEdit->toPlainText().toStdString());
+        isMinifiled = true;
+        outputConsole -> appendPlainText("file minified successfully.");
+        outputConsole -> appendPlainText("================= Start Minified Xml Text =================\n");
+        outputConsole -> appendPlainText(minifiedXml.data());
+        outputConsole -> appendPlainText("\n");
+        outputConsole -> appendPlainText("================= End Minified Xml Text =================\n");
+    }
+    catch (exception &e) {
+        outputConsole -> appendPlainText("ERROR: minifying failed for some reason.");
+        outputConsole -> currentCharFormat().colorProperty(0xFFFF0000);
+        outputConsole -> appendPlainText(e.what());
+    }
 }
 
 void MainWindow::jsonButtonClicked() {
@@ -156,20 +237,267 @@ void MainWindow::jsonButtonClicked() {
     jsonViewer -> setReadOnly(true);
     jsonViewer->setFixedHeight(800);
     jsonViewer->setFixedWidth(1600);
+    if (xml == nullptr || !isMinifiled) {
+        outputConsole -> appendPlainText("ERROR: no minified text found, please run Minify button first.");
+        return;
+    }
     try {
-        Xml *xml = new Xml(textEdit->toPlainText().toStdString());
-        string minifiedXml = xml->minifying(textEdit->toPlainText().toStdString());
+        string minifiedXml = textEdit->toPlainText().toStdString();
         jsonViewer->setPlainText(xml->xmlToJSON(minifiedXml).data());
+        QVBoxLayout *verticalBoxLayout = new QVBoxLayout();
+        verticalBoxLayout -> addWidget(jsonViewer);
+        QWidget *central = new QWidget();
+        central -> setLayout(verticalBoxLayout);
+        central -> show();
     }
-    catch (exception) {
-        QMessageBox::about(this, tr("Error"),
-                 tr("Something went wrong."));
+    catch (exception &e) {
+        outputConsole -> appendPlainText("ERROR: converting to json failed for some reason.");
+        outputConsole -> appendPlainText(e.what());
     }
-    QVBoxLayout *verticalBoxLayout = new QVBoxLayout();
-    verticalBoxLayout -> addWidget(jsonViewer);
-    QWidget *central = new QWidget();
-    central -> setLayout(verticalBoxLayout);
-    central -> show();
+}
+
+//string formatPath(string path) {
+//    string formattedPath;
+//    for (char x : path) {
+//        if (x == '/') formattedPath.push_back('\\');
+//        else formattedPath.push_back(x);
+//    }
+//    return formattedPath;
+//}
+
+void MainWindow::graphButtonClicked() {
+    if (xml == nullptr || !isMinifiled) {
+        outputConsole -> appendPlainText("ERROR: no minified text found, please run Minify button first.");
+        return;
+    }
+    QString fileName = QFileDialog::getExistingDirectory(this);
+    qInfo() << fileName;
+    if (!fileName.isEmpty()) {
+        outputConsole -> clear();
+//        string formattedPath = formatPath(fileName.toStdString()); // for formatting paths correctly
+//        qInfo() << formattedPath.data();
+        QPlainTextEdit *graphViewer = new QPlainTextEdit();
+        graphViewer -> setReadOnly(true);
+        graphViewer->setFixedHeight(800);
+        graphViewer->setFixedWidth(1600);
+
+        try {
+//            qInfo() << minifiedXml.data();
+//            qInfo() << minifiedXml.length();
+            if (sna != nullptr) {
+                outputConsole -> appendPlainText("optimizing memory...");
+                delete sna;
+                outputConsole -> currentCharFormat().colorProperty(0xFF00FF00);
+                outputConsole -> appendPlainText("memory optimized successfully.");
+                outputConsole -> currentCharFormat().colorProperty(0xFFFFFFFF);
+            }
+            else {
+                outputConsole -> appendPlainText("creating SNA object...");
+                sna = new SNA();
+                outputConsole -> currentCharFormat().colorProperty(0xFF00FF00);
+                outputConsole -> appendPlainText("SNA object created successfully.");
+                outputConsole -> currentCharFormat().colorProperty(0xFFFFFFFF);
+            }
+
+            users = sna -> extractInputFromMinifiedXML(minifiedXml, *sna);
+            qInfo() << "users: " << users.size();
+            adj = sna -> getGraph(users);
+            qInfo() << "adj: " << adj.size();
+            p = sna -> GetAntiID(users);
+            ID = p.first;
+
+            antiID = p.second;
+
+            outputConsole -> appendPlainText("creating input.txt file..., this is the file where we will read input from.");
+            sna -> createFile(users, fileName.toStdString().append("input.txt"));
+            outputConsole -> appendPlainText("input.txt file create successfully.");
+            outputConsole -> appendPlainText(tr("you can find it here %1").arg(fileName));
+//            qInfo() << fileName.toStdString().data();
+            outputConsole -> appendPlainText(tr("reading input.txt in %1 to create the graph...").arg(fileName));
+            sna -> takeInput(*sna, fileName.toStdString());
+            isGraphCreated = true;
+            outputConsole -> appendPlainText("graph created successfully.");
+        }
+        catch (exception &e) {
+            outputConsole -> appendPlainText("ERROR: buidling graph failed for some reason.");
+            outputConsole -> appendPlainText(e.what());
+        }
+    }
+}
+
+void MainWindow::mostInfluencerButtonClicked() {
+    if (xml == nullptr || !isMinifiled) {
+        outputConsole -> appendPlainText("ERROR: no minified text found, please run Minify button first.");
+        return;
+    }
+    if (!isGraphCreated) {
+        outputConsole -> appendPlainText("ERROR: no graph found, please run Graph button first.");
+        return;
+    }
+    try {
+        outputConsole -> appendPlainText("=========================== Most Inflencer User Output ========================");
+        outputConsole -> appendPlainText(getMostInfluencer(adj, antiID).data());
+        outputConsole -> appendPlainText("=====================================================================");
+
+    }
+    catch (exception &e) {
+        outputConsole -> appendPlainText("ERROR: getting most influencer user failed for some reason.");
+outputConsole -> appendPlainText(e.what());
+    }
+}
+
+void MainWindow::mostActiveButtonClicked() {
+    if (xml == nullptr || !isMinifiled) {
+        outputConsole -> appendPlainText("ERROR: no minified text found, please run Minify button first.");
+        return;
+    }
+    if (!isGraphCreated) {
+        outputConsole -> appendPlainText("ERROR: no graph found, please run Graph button first.");
+        return;
+    }
+    try {
+        outputConsole -> appendPlainText("=========================== Most Active User Output ========================");
+        outputConsole -> appendPlainText(getMostActive(adj, antiID).data());
+        outputConsole -> appendPlainText("=====================================================================");
+    }
+    catch (exception &e) {
+        outputConsole -> appendPlainText("ERROR: getting most active user failed for some reason.");
+outputConsole -> appendPlainText(e.what());
+    }
+}
+
+void MainWindow::mutualFollowersButtonClicked() {
+    if (xml == nullptr || !isMinifiled) {
+        outputConsole -> appendPlainText("ERROR: no minified text found, please run Minify button first.");
+        return;
+    }
+    if (!isGraphCreated) {
+        outputConsole -> appendPlainText("ERROR: no graph found, please run Graph button first.");
+        return;
+    }
+    string user1;
+    string user2;
+    try {
+        if (firstUserLineEdit -> text().length() != 0 && secondUserLineEdit -> text().length() != 0) {
+            outputConsole -> appendPlainText("=========================== Mutual Followers Output ========================");
+            user1 = firstUserLineEdit -> text().toStdString();
+            user2 = secondUserLineEdit -> text().toStdString();
+            vector<string> mutual = getMutualFollowers(user1, user2, adj, antiID, ID);
+            for (auto &x : mutual) {
+                outputConsole -> appendPlainText(x.data());
+            }
+            outputConsole -> appendPlainText("=====================================================================");
+        }
+        else {
+            outputConsole -> appendPlainText("ERROR: please fill in \"First User Name\" and \"Second User Name\" above in order to find mutual followers between them.");
+        }
+    }
+    catch (exception &e) {
+        outputConsole -> appendPlainText(tr("ERROR: suggesting followers for user %1 and user %2 failed for some reason.").arg(user1.data(), user2.data()));
+outputConsole -> appendPlainText(e.what());
+    }
+}
+
+void MainWindow::suggestFollowersButtonClicked() {
+    if (xml == nullptr || !isMinifiled) {
+        outputConsole -> appendPlainText("ERROR: no minified text found, please run Minify button first.");
+        return;
+    }
+    if (!isGraphCreated) {
+        outputConsole -> appendPlainText("ERROR: no graph found, please run Graph button first.");
+        return;
+    }
+    string user1;
+    try {
+        if (firstUserLineEdit -> text().length() != 0) {
+            outputConsole -> appendPlainText("=========================== Suggest Followers Output ========================");
+            user1 = firstUserLineEdit -> text().toStdString();
+            vector <string> suggest = suggestFollowers(user1 , adj, antiID, ID);
+            for (auto &x : suggest) {
+                outputConsole -> appendPlainText(x.data());
+            }
+            outputConsole -> appendPlainText("=====================================================================");
+        }
+        else {
+            outputConsole -> appendPlainText("ERROR: please fill in \"First User Name\" above in order to find suggest followers.");
+        }
+
+    }
+    catch (exception &e) {
+        outputConsole -> appendPlainText(tr("ERROR: suggesting followers for user %1 failed for some reason.").arg(user1.data()));
+        outputConsole -> appendPlainText(e.what());
+    }
+}
+
+void MainWindow::postsSearchButtonClicked() {
+    if (xml == nullptr || !isMinifiled) {
+        outputConsole -> appendPlainText("ERROR: no minified text found, please run Minify button first.");
+        return;
+    }
+    if (!isGraphCreated) {
+        outputConsole -> appendPlainText("ERROR: no graph found, please run Graph button first.");
+        return;
+    }
+    string topic;
+    string word;
+    try {
+
+        if ((topicSearchLineEdit -> text().length()) != 0)
+        {
+            outputConsole -> appendPlainText("=========================== Search Topic Result Output ========================");
+            topic = topicSearchLineEdit -> text().toStdString();
+            // false means search in topics
+            vector<pair<int, string>> x=postSearch(topic, false, users);
+            for(auto&xx:x) {
+                outputConsole -> appendPlainText(tr("%1 %2").arg(xx.first).arg(xx.second.data()));
+            }
+            outputConsole -> appendPlainText("=====================================================================");
+        }
+        else {
+            outputConsole -> appendPlainText("ERROR: please fill in \"Topic Name for Search\" above in order to search in topics.");
+        }
+
+        if ((bodySearchLineEdit -> text().length()) != 0)
+        {
+            outputConsole -> appendPlainText("=========================== Search Body Result Output ========================");
+            word = bodySearchLineEdit -> text().toStdString();
+            // true means search in bodies
+            vector<pair<int, string>> y=postSearch(word, true, users);
+            for(auto&yy:y) {
+                outputConsole -> appendPlainText(tr("%1 %2").arg(yy.first).arg(yy.second.data()));
+            }
+            outputConsole -> appendPlainText("=====================================================================");
+        }
+        else {
+            outputConsole -> appendPlainText("ERROR: please fill in \"Body Word for Search\" above in order to search in topics.");
+        }
+
+    }
+    catch (exception &e) {
+        outputConsole -> appendPlainText(tr("ERROR: searching for topic %1 and word %2 failed for some reason.").arg(topic.data(), word.data()));
+outputConsole -> appendPlainText(e.what());
+    }
+}
+
+void MainWindow::betweennessButtonClicked() {
+    if (xml == nullptr || !isMinifiled) {
+        outputConsole -> appendPlainText("ERROR: no minified text found, please run Minify button first.");
+        return;
+    }
+    if (!isGraphCreated) {
+        outputConsole -> appendPlainText("ERROR: no graph found, please run Graph button first.");
+        return;
+    }
+    try {
+        outputConsole -> appendPlainText("=========================== Highest Betweenness Output ========================");
+        string betweenness = highestBetweenness(adj, antiID);
+        outputConsole -> appendPlainText(betweenness.data());
+        outputConsole -> appendPlainText("=====================================================================");
+    }
+    catch (exception &e) {
+        outputConsole -> appendPlainText("ERROR: calculating betweenness failed for some reason.");
+outputConsole -> appendPlainText(e.what());
+    }
 }
 
 void MainWindow::closeEvent(QCloseEvent *event) {
@@ -195,8 +523,7 @@ void MainWindow::open() {
         if (!fileName.isEmpty())
             loadFile(fileName);
         else {
-            QMessageBox::about(this, tr("Error"),
-                     tr("This XML file is empty."));
+            outputConsole -> appendPlainText("xml is empty.");
         }
     }
 }
@@ -382,6 +709,26 @@ void MainWindow::loadFile(const QString &fileName) {
 
     setCurrentFile(fileName);
     statusBar()->showMessage(tr("File loaded"), statusBarMessageLifetime);
+
+    if (xml != nullptr) {
+        outputConsole -> appendPlainText("optimizing memory...");
+        delete xml;
+        outputConsole -> currentCharFormat().colorProperty(0xFF00FF00);
+        outputConsole -> appendPlainText("memory optimized successfully.");
+        outputConsole -> currentCharFormat().colorProperty(0xFFFFFFFF);
+    }
+    try {
+        outputConsole -> appendPlainText("creating new xml object...");
+        xml = new Xml(textEdit->toPlainText().toStdString());
+        outputConsole -> appendPlainText("xml object created successfully.");
+        isMinifiled = false;
+        isGraphCreated = false;
+        outputConsole -> appendPlainText("reset minify done.");
+    }
+    catch (exception &e) {
+        outputConsole -> appendPlainText("something went wrong while creating xml object.");
+        outputConsole -> appendPlainText(e.what());
+    }
 }
 
 bool MainWindow::saveFile(const QString &fileName) {

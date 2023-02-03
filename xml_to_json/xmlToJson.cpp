@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+#include <QPlainTextEdit>
 
 using namespace std;
 class Xml {
@@ -20,7 +21,7 @@ public:
             if (s[i] == '\n') {
                 continue;
             } else if (s[i] == ' ') {
-                if ((s[i - 1] == ' ') || (s[i - 1] == '>' && s[i + 1] == '<'))
+                if ((s[i - 1] == ' ') || (s[i + 1] == ' ') || (s[i - 1] == '>' || s[i + 1] == '<') || (s[i + 1] == '>' || s[i - 1] == '<'))
                     continue;
                 else
                     str1 += s[i];
@@ -36,7 +37,8 @@ public:
 
 //f2
 //returns vector of closing and opening tags
-    vector<string> tags(string minifiedString) {
+    vector<string> tags() {
+        string minifiedString = minifying(xml);
         string tagName;
         vector<string> tagsNames;
         bool openTheTag = false;
@@ -62,7 +64,8 @@ public:
 
 //f3
 //gets the data of each tag
-    vector<string> tagsData(string minifiedString) {
+    vector<string> tagsData() {
+        string minifiedString = minifying(xml);
         vector<string> DataOfTags;
         int minifiedStringSize = minifiedString.size();
         string temp;
@@ -134,8 +137,8 @@ public:
 //xml to json function
     string xmlToJSON(string minifiedString) {
             //preparing xml to be converted
-        vector<string> tagsNames = tags(minifiedString);
-        vector<string> myTagsData = tagsData(minifiedString);
+        vector<string> tagsNames = tags();
+        vector<string> myTagsData = tagsData();
         int tagsNamesSize = tagsNames.size();
         vector<bool> isArrayTag = arrayTag(tagsNamesSize, tagsNames);
         vector<string> keyOfArrayElements;

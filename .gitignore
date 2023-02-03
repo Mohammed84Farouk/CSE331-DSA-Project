@@ -20,6 +20,7 @@ object_script.*.Debug
 /cmake-build-debug/
 /.vscode/
 /.build/
+/SNA_graph/.idea/
 *.txt.user
 *.pro
 *.pro.user

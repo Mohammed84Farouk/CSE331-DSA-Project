@@ -2,6 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QLabel>
+#include <QLineEdit>
+#include "xml_to_json/xmlToJson.cpp"
 
 QT_BEGIN_NAMESPACE
 class QAction;
@@ -50,20 +53,49 @@ private:
     void prettifyingButtonClicked();
     void minifyingButtonClicked();
     void jsonButtonClicked();
+    void graphButtonClicked();
+    void betweennessButtonClicked();
+
+    void mostInfluencerButtonClicked();
+    void mostActiveButtonClicked();
+    void mutualFollowersButtonClicked();
+    void suggestFollowersButtonClicked();
+    void postsSearchButtonClicked();
+
+    string minifiedXml;
+    bool isMinifiled = false;
+    bool isGraphCreated = false;
     QWidget *central;
     QString strippedName(const QString &fullFileName);
     QPlainTextEdit *textEdit;
     QString curFile;
     QMenuBar *menuBar;
     QPushButton *checkButton;
-    QPushButton *fixButton;
     QPushButton *compressButton;
     QPushButton *decompressButton;
     QPushButton *prettifyingButton;
     QPushButton *minifyingButton;
     QPushButton *toJSONButton;
     QPushButton *toGRAPHButton;
+    QPushButton *mostInfluencerButton;
+    QPushButton *mostActiveButton;
+    QPushButton *mutualFollowersButton;
+    QPushButton *suggestFollowersButton;
+    QPushButton *postsSearchButton;
+    QPushButton *betweennessButton;
     QPlainTextEdit *outputConsole;
+
+    QLabel *topicSearchLabel;
+    QLineEdit *topicSearchLineEdit;
+    QLabel *bodySearchLabel;
+    QLineEdit *bodySearchLineEdit;
+
+    QLabel *firstUserLabel;
+    QLineEdit *firstUserLineEdit;
+    QLabel *secondUserLabel;
+    QLineEdit *secondUserLineEdit;
+
+    Xml *xml = nullptr;
 };
 
 
