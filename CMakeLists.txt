@@ -24,6 +24,7 @@ add_subdirectory(${CMAKE_SOURCE_DIR}/compression_decompression)
 add_subdirectory(${CMAKE_SOURCE_DIR}/identation)
 add_subdirectory(${CMAKE_SOURCE_DIR}/xml_to_json)
 add_subdirectory(${CMAKE_SOURCE_DIR}/SNA_graph)
+add_subdirectory(${CMAKE_SOURCE_DIR}/graphviz_dot_generator)
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(xmlparser
