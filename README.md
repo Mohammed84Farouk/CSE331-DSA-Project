@@ -37,8 +37,8 @@ We would like to extend our gratitude to the Qt community for their support and 
 
 ## About US
 
-Mohammed Mohammed Farouk ``1901472``
-Mostafa Mohamed Ahmed Abdelaal ``1803093``
-Ahmed Reda Ibrahim ``1901164``
-Mostafa Monged Mostafa Mohamed ``1900563``
-Saif Salah Eldeen Yahya Mostafa ``1901529``
+- Mohammed Mohammed Farouk ``1901472``
+- Mostafa Mohamed Ahmed Abdelaal ``1803093``
+- Ahmed Reda Ibrahim ``1901164``
+- Mostafa Monged Mostafa Mohamed ``1900563``
+- Saif Salah Eldeen Yahya Mostafa ``1901529``
