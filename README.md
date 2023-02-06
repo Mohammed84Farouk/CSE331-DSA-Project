@@ -50,6 +50,12 @@ We would like to extend our gratitude to the Qt community for their support and 
 
 ## About US
 
+We are a group of five students who share a passion for solving complex problems and creating innovative solutions. Our team consists of a five computer science majors, providing a unique blend of skills and perspectives.
+
+At the heart of our team is a shared commitment to hard work, collaboration, and making a difference. Whether we're working on a school project or a startup, we approach every challenge with enthusiasm, creativity, and a drive to succeed.
+
+We are excited to see what the future holds and are committed to making the most of every opportunity that comes our way.
+
 - Mohammed Mohammed Farouk ``1901472``
 - Mostafa Mohamed Ahmed Abdelaal ``1803093``
 - Ahmed Reda Ibrahim ``1901164``
