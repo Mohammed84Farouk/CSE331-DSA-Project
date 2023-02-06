@@ -18,8 +18,6 @@ Before building and running this project, you will need to have the following in
 - Minifying and Preitifying XML files
 - Converting XML files to JSON format
 - Representing XML files using GRAPH data structure (SNA)
-- A dynamic label that changes its text based on the selected item in a combo box
-- A button that clears the contents of the form when clicked
 
 ## Building the project
 
