@@ -3,7 +3,7 @@
 #include "mainwindow.h"
 #include "compression_decompression/huffman.cpp"
 #include "identation/identation.cpp"
-#include "SNA_graph/main.cpp"
+#include "SNA_graph/SNA_graph.cpp"
 
 SNA *sna = nullptr;
 vector<user> users;
