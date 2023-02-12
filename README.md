@@ -1,32 +1,63 @@
 # CSE331-DSA-Project
 
-This application is made to deal with xml files and do some operations on them
-In the following we will discuss what is the functions that this application can provide for you
-•	First of all use load button to load the xml file you want to deal with
-•	There are many buttons: Validate, Prettify, Compress, Decompress, Minify, Json, Graph, Most Influencer, Most Active, Mutual followers, Suggest followers and Search Post
-•	To check Consistency of xml use Validate Button you have to put file in same folder of exe and pass the file name to Consistency function and another file for the function to save output at (can be same file but I did it like this so we can see the difference) the function does fix the code then it pass the output of the function to the prettify function to make the code readable and easily to be figured out the output of the consistency function is a valid XML but some of the original data in the original XML might get lost 
-•	To get a pretty XML use Prettify button (note that prettify used is according to own preference due to using HTML before and it can be changed the main target was to make the code look simplified, easy to read and aligned)
-•	To use minify click the minify button then the minified file will appear in the output place
-	o	Minify is used to rewrite the file with no spaces or new lines
-•	To convert your XML file to readable JSON format click Json button then the output will appear in the output place
-•	To compress the file click Compress button then the output file will appear in the same directory of your input file
-	o	Used to decrease the size of the file for the sake of sharing for example
-•	To decompress the file click Decompress button then the output file will appear in the same directory of your input file
-	o	Used to retrieve the original file
-•	Finally, we will represent our data in the form of a graph use Graph button, in order to: 
-	o	get the most influencing user use Most Influencer button
-	o	get the most active user use Most Active button
-	o	get mutual followers between two users use Mutual followers button
-	o	suggest some followers to a user use Suggest followers button
-	o	search on posts with common word using Search Post button
-	o	know which user has the highest betweenness centrality use Betweenness button
+This is a Qt project that showcases the use of various GUI components and the event-driven architecture provided by the Qt framework.
 
+## Prerequisites
 
-# Team Members
+Before building and running this project, you will need to have the following installed on your system:
+
+- Qt 7.0.0
+- A C++ compiler (e.g. GCC, MSVC, or Clang)
+- Qt Creator (optional but recommended for development)
+- CMake 3.23.1
+
+## Features
+
+- Compressing and Decompressing files
+- Validating XML files for errors and try a way for fixing them
+- Minifying and Preitifying XML files
+- Converting XML files to JSON format
+- Representing XML files using GRAPH data structure (SNA)
+
+## Building the project
+
+Here are the steps to build and run the project:
+
+1. Clone the repository
+```bash
+git clone https://github.com/Mohammed84Farouk/CSE331-DSA-Project.git
 ```
-Mohammed Mohammed Farouk - 1901472
-Mostafa Mohamed Ahmed Abdelaal - 1803093
-Ahmed Reda Ibrahim - 1901164
-Mostafa Monged Mostafa Mohamed - 1900563
-Saif Salah Eldeen Yahya Mostafa - 1901529
+3. Change into the project directory
+```bash
+cd CSE331-DSA-Project
 ```
+4. Run cmake to generate the Makefile (Don't forget to specify the generator for cmake command in order to run correctly, this is dependent on your compiler)
+```bash
+cmake 
+```
+5. Compile the project using make
+```bash
+make
+```
+6. Run the project 
+```bash
+./CSE331-DSA-Project
+```
+
+## Acknowledgements
+
+We would like to extend our gratitude to the Qt community for their support and for creating such a powerful framework for developing GUI applications. We would also like to acknowledge the open-source projects and libraries that were used in the development of this project.
+
+## About US
+
+We are a group of five students currently enrolled at Ain Shams University, Faculty of Engineering, who share a passion for solving complex problems and creating innovative solutions. Our team consists of a five Computer & Systems Engineering majors, providing a unique blend of skills and perspectives.
+
+At the heart of our team is a shared commitment to hard work, collaboration, and making a difference. Whether we're working on a school project or a startup, we approach every challenge with enthusiasm, creativity, and a drive to succeed.
+
+We are excited to see what the future holds and are committed to making the most of every opportunity that comes our way.
+
+- Mohammed Mohammed Farouk ``1901472``
+- Mostafa Mohamed Ahmed Abdelaal ``1803093``
+- Ahmed Reda Ibrahim ``1901164``
+- Mostafa Monged Mostafa Mohamed ``1900563``
+- Saif Salah Eldeen Yahya Mostafa ``1901529``
