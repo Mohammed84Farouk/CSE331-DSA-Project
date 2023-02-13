@@ -2,6 +2,8 @@
 
 This is a Qt project that showcases the use of various GUI components and the event-driven architecture provided by the Qt framework.
 
+![test xml 13_02_2023 08_13_46 PM](https://user-images.githubusercontent.com/74428638/218540346-45109288-8916-4d6f-b573-959d6e482b0b.png)
+
 ## Prerequisites
 
 Before building and running this project, you will need to have the following installed on your system:
