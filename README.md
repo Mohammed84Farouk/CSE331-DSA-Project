@@ -25,26 +25,12 @@ Before building and running this project, you will need to have the following in
 
 Here are the steps to build and run the project:
 
-1. Clone the repository
+1. Download and install qt creator
+2. Clone the repository
 ```bash
 git clone https://github.com/Mohammed84Farouk/CSE331-DSA-Project.git
 ```
-3. Change into the project directory
-```bash
-cd CSE331-DSA-Project
-```
-4. Run cmake to generate the Makefile (Don't forget to specify the generator for cmake command in order to run correctly, this is dependent on your compiler)
-```bash
-cmake 
-```
-5. Compile the project using make
-```bash
-make
-```
-6. Run the project 
-```bash
-./CSE331-DSA-Project
-```
+3. Open root ``CMakeLists.txt`` file in qt creator and run the project
 
 ## Acknowledgements
 
