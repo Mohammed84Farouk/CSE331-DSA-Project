@@ -23,7 +23,7 @@ Before building and running this project, you will need to have the following in
 
 ## Building the project
 
-Here are the steps to build and run the project:
+Here are the steps to build and run the project (for windows we didn't run the project on any other platform):
 
 1. Download and install qt creator
 2. Clone the repository
