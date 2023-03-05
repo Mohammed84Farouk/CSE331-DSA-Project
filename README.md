@@ -32,7 +32,8 @@ git clone https://github.com/Mohammed84Farouk/CSE331-DSA-Project.git
 ```
 3. Open qt creator and select ``File -> Open File or Project`` or on keyboard ``Ctrl+o``
 4. Select root ``CMakeLists.txt`` file
-5. Run the project
+5. Press configure project button on the right
+6. Run the project
 
 ## Acknowledgements
 
