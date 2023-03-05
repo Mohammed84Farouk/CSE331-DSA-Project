@@ -10,7 +10,7 @@ Before building and running this project, you will need to have the following in
 
 - Qt 7.0.0
 - A C++ compiler (e.g. GCC, MSVC, or Clang)
-- Qt Creator (optional but recommended for development because we tested the project through it so don't use ``Visual Studio Code`` or any other)
+- Qt Creator (optional but recommended for development because we tested the project through it so don't use ``Visual Studio Code`` or any other) (you can use any generator but not "MinGW Makefiles", and still we don't guarantee it will work)
 - CMake 3.23.1
 
 ## Features
