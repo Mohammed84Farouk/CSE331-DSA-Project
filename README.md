@@ -30,7 +30,9 @@ Here are the steps to build and run the project (for windows only, we didn't run
 ```bash
 git clone https://github.com/Mohammed84Farouk/CSE331-DSA-Project.git
 ```
-3. Open root ``CMakeLists.txt`` file in qt creator and run the project
+3. Open qt creator and select ``File -> Open File or Project`` or on keyboard ``Ctrl+o``
+4. Select root ``CMakeLists.txt`` file
+5. Run the project
 
 ## Acknowledgements
 
