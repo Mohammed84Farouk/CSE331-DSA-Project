@@ -25,7 +25,7 @@ Before building and running this project, you will need to have the following in
 
 Here are the steps to build and run the project (for windows only, we didn't run the project on any other platform):
 
-1. If you don't have a compiler, follow the steps in the link below to install ``mingw64`` from ``msys2``. I'm using ``GNU 11.2.0``
+1. If you don't have a compiler, follow the steps in the link below to install ``mingw64`` from ``msys2``. I'm using ``GNU 11.2.0``. Note that some old versions such as ``GNU 6.0.0`` won't generate ``Makefile`` file correctly.
 ```
 https://www.msys2.org/
 ```
