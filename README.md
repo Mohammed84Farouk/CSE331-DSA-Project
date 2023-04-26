@@ -25,8 +25,12 @@ Before building and running this project, you will need to have the following in
 
 Here are the steps to build and run the project (for windows only, we didn't run the project on any other platform):
 
-1. Download and install qt creator
-2. Clone the repository
+1. If you don't have a compiler, follow the steps in the link below to install ``mingw64`` from ``msys2``. I'm using ``GNU 11.2.0``
+```
+https://www.msys2.org/
+```
+2. Download and install qt creator
+3. Clone the repository
 ```bash
 git clone https://github.com/Mohammed84Farouk/CSE331-DSA-Project.git
 ```
