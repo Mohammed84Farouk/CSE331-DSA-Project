@@ -10,7 +10,7 @@ Before building and running this project, you will need to have the following in
 
 - Qt 7.0.0
 - A C++ compiler (e.g. GCC, MSVC, or Clang)
-- Qt Creator (optional but recommended for development because we tested the project through it so don't use ``Visual Studio Code`` or any other) (you can use any generator but not "MinGW Makefiles", and still we don't guarantee it will work)
+- Qt Creator or any IDE you like (Make sure to check the comments in the root ``CMakeLists.txt`` file for any outdated configurations such as Qt version)
 - CMake 3.23.1
 
 ## Features
@@ -30,10 +30,32 @@ Here are the steps to build and run the project (for windows only, we didn't run
 ```bash
 git clone https://github.com/Mohammed84Farouk/CSE331-DSA-Project.git
 ```
-3. Open qt creator and select ``File -> Open File or Project`` or on keyboard ``Ctrl+o``
+3. If you are using Qt Creator: select ``File -> Open File or Project`` or on keyboard ``Ctrl+o``
 4. Select root ``CMakeLists.txt`` file
 5. Press configure project button on the right
 6. Run the project
+7. If you are not using Qt Creator: have a look at the root ``CMakeLists.txt`` file and uncomment the lines needed.
+8. Create a build directory for CMake output
+```bash
+mkdir .build
+```
+9. Go inside
+```bash
+cd .build
+```
+10. Produce the ``Makefile`` file needed
+```bash
+cmake .. -G "MinGW Makefiles"
+```
+11. Build the project (if that doesn't work for you just find out the correct naming of make excutable, for me it's ``mingw32-make``)
+```bash
+make
+```
+12. Run the project
+```bash
+./xmlparser.exe
+```
+13. Any update you make in the source files just repeat steps 10 - 12
 
 ## Acknowledgements
 
