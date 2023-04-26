@@ -11,13 +11,13 @@ set(CMAKE_AUTORCC ON) # for .qrc resource file to be added to excutable using ad
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Edit the below paths to match your Qt installation correct path and version.
+# Uncomment the below lines then edit paths to match your Qt installation correct path and version.
 # Using these paths, you can compile and build this Qt project using CMake from any IDE you like.
-set(QT_DIR "C:/Qt/6.2.4/mingw_64/lib/cmake/Qt6")
-set(Qt6_DIR "C:/Qt/6.2.4/mingw_64/lib/cmake/Qt6")
-set(Qt6WidgetsTools_DIR "C:/Qt/6.2.4/mingw_64/lib/cmake/Qt6WidgetsTools")
-set(Qt6CoreTools_DIR "C:/Qt/6.2.4/mingw_64/lib/cmake/Qt6CoreTools")
-set(Qt6GuiTools_DIR "C:/Qt/6.2.4/mingw_64/lib/cmake/Qt6GuiTools")
+# set(QT_DIR "C:/Qt/6.2.4/mingw_64/lib/cmake/Qt6")
+# set(Qt6_DIR "C:/Qt/6.2.4/mingw_64/lib/cmake/Qt6")
+# set(Qt6WidgetsTools_DIR "C:/Qt/6.2.4/mingw_64/lib/cmake/Qt6WidgetsTools")
+# set(Qt6CoreTools_DIR "C:/Qt/6.2.4/mingw_64/lib/cmake/Qt6CoreTools")
+# set(Qt6GuiTools_DIR "C:/Qt/6.2.4/mingw_64/lib/cmake/Qt6GuiTools")
 
 # Make sure to edit Qt version.
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
