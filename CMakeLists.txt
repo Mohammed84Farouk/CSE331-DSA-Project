@@ -13,11 +13,15 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Uncomment the below lines then edit paths to match your Qt installation correct path and version.
 # Using these paths, you can compile and build this Qt project using CMake from any IDE you like.
-# set(QT_DIR "C:/Qt/6.2.4/mingw_64/lib/cmake/Qt6")
-# set(Qt6_DIR "C:/Qt/6.2.4/mingw_64/lib/cmake/Qt6")
-# set(Qt6WidgetsTools_DIR "C:/Qt/6.2.4/mingw_64/lib/cmake/Qt6WidgetsTools")
-# set(Qt6CoreTools_DIR "C:/Qt/6.2.4/mingw_64/lib/cmake/Qt6CoreTools")
-# set(Qt6GuiTools_DIR "C:/Qt/6.2.4/mingw_64/lib/cmake/Qt6GuiTools")
+# set(QT_FULL_VERSION "6.2.4")
+
+# set(QT_CMAKE_CONFIG_BASE_PATH "C:/Qt/${QT_FULL_VERSION}/mingw_64/lib/cmake")
+
+# set(QT_DIR "${QT_CMAKE_CONFIG_BASE_PATH}/Qt6")
+# set(Qt6_DIR "${QT_CMAKE_CONFIG_BASE_PATH}/Qt6")
+# set(Qt6WidgetsTools_DIR "${QT_CMAKE_CONFIG_BASE_PATH}/Qt6WidgetsTools")
+# set(Qt6CoreTools_DIR "${QT_CMAKE_CONFIG_BASE_PATH}/Qt6CoreTools")
+# set(Qt6GuiTools_DIR "${QT_CMAKE_CONFIG_BASE_PATH}/Qt6GuiTools")
 
 # Make sure to edit Qt version.
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
