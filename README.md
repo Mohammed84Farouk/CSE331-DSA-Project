@@ -47,7 +47,7 @@ cd .build
 ```bash
 cmake .. -G "MinGW Makefiles"
 ```
-11. Build the project (if that doesn't work for you just find out the correct naming of make excutable, for me it's ``mingw32-make``)
+11. Build the project (if that doesn't work for you, just find out the correct naming of make excutable, for me it's ``mingw32-make``)
 ```bash
 make
 ```
