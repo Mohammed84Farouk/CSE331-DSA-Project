@@ -30,11 +30,19 @@ Here are the steps to build and run the project (for windows only, we didn't run
 https://www.msys2.org/
 ```
 2. Use the following commands from ``MSYS2 MINGW64`` terminal
+ - for 64-bit Windows:
 ```bash
 pacman -Sy mingw-w64-x86_64-gcc
 ```
 ```bash
 pacman -Sy mingw64/mingw-w64-x86_64-gdb
+```
+ - for 32-bit Windows:
+```bash
+pacman -Sy mingw-w64-i686-gcc
+```
+```bash
+pacman -Sy mingw32/mingw-w64-i686-gdb
 ```
 3. Download and install qt creator
 4. Clone the repository
