@@ -29,7 +29,7 @@ Here are the steps to build and run the project (for windows only, we didn't run
 ```
 https://www.msys2.org/
 ```
-2. Use the following commands from ``MSYS2 MINGW64`` terminal
+2. Use the following commands from ``MSYS2 MINGW64`` or ``MSYS2 MINGW32`` terminal
  - for 64-bit Windows:
 ```bash
 pacman -Sy mingw-w64-x86_64-gcc
