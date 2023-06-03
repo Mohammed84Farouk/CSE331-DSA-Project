@@ -29,8 +29,15 @@ Here are the steps to build and run the project (for windows only, we didn't run
 ```
 https://www.msys2.org/
 ```
-2. Download and install qt creator
-3. Clone the repository
+2. Use the following commands from ``MSYS2 MINGW64`` terminal
+```bash
+pacman -Sy mingw-w64-x86_64-gcc
+```
+```bash
+pacman -Sy mingw64/mingw-w64-x86_64-gdb
+```
+3. Download and install qt creator
+4. Clone the repository
 ```bash
 git clone https://github.com/Mohammed84Farouk/CSE331-DSA-Project.git
 ```
