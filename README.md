@@ -16,14 +16,14 @@ Before building and running this project, you will need to have the following in
 ## Features
 
 - Compressing and Decompressing files
-- Validating XML files for errors and try a way for fixing them
+- Validating and fixing XML files for errors
 - Minifying and Preitifying XML files
 - Converting XML files to JSON format
 - Representing XML files using GRAPH data structure (SNA)
 
 ## Building the project
 
-Here are the steps to build and run the project (for windows only, we didn't run the project on any other platform):
+Here are the steps to build and run the project (for Windows only, we didn't run the project on any other platform):
 
 1. If you don't have a compiler, follow the steps in the link below to install ``mingw64`` from ``msys2``. I'm using ``GNU 11.2.0``. Note that some old versions such as ``GNU 6.0.0`` won't generate ``Makefile`` file correctly.
 ```
@@ -66,7 +66,7 @@ cd .build
 ```bash
 cmake .. -G "MinGW Makefiles"
 ```
-11. Build the project (if that doesn't work, just add ``C:\msys64\usr\bin`` to your path) (if that also doesn't work for you, just find out the correct naming of make excutable, for me it's ``mingw32-make``)
+11. Build the project (if that doesn't work, just add ``C:\msys64\usr\bin`` to your path) (if that also doesn't work for you, just find out the correct naming of make executable, for me it's ``mingw32-make``)
 ```bash
 make
 ```
@@ -74,7 +74,7 @@ make
 ```bash
 ./xmlparser.exe
 ```
-13. Any update you make in the source files just repeat steps 10 - 12
+13. For any update you make in the source files just repeat steps 10 - 12
 
 ## Acknowledgements
 
@@ -82,7 +82,7 @@ We would like to extend our gratitude to the Qt community for their support and 
 
 ## About US
 
-We are a group of five students currently enrolled at Ain Shams University, Faculty of Engineering, who share a passion for solving complex problems and creating innovative solutions. Our team consists of a five Computer & Systems Engineering majors, providing a unique blend of skills and perspectives.
+We are a group of five students currently enrolled at Ain Shams University, Faculty of Engineering, who share a passion for solving complex problems and creating innovative solutions. Our team consists of five Computer & Systems Engineering majors, providing a unique blend of skills and perspectives.
 
 At the heart of our team is a shared commitment to hard work, collaboration, and making a difference. Whether we're working on a school project or a startup, we approach every challenge with enthusiasm, creativity, and a drive to succeed.
 
